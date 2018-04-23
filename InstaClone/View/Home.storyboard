@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Blocstagram-->
         <scene sceneID="1j4-Cd-Xqe">
             <objects>
-                <viewController id="oCz-LK-P5G" customClass="HomeViewController" customModule="Blocstagram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="oCz-LK-P5G" customClass="HomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cjd-0w-JPH"/>
                         <viewControllerLayoutGuide type="bottom" id="708-LY-9an"/>
@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HomeCell" rowHeight="507" id="jGc-Fo-MMv" customClass="HomeTableViewCell" customModule="Blocstagram" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HomeCell" rowHeight="507" id="jGc-Fo-MMv" customClass="HomeTableViewCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="507"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jGc-Fo-MMv" id="OQa-iC-ZzF">
@@ -66,9 +66,6 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Comment" translatesAutoresizingMaskIntoConstraints="NO" id="Kyn-Vn-iWb">
                                                     <rect key="frame" x="53" y="381" width="25" height="25"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="share" translatesAutoresizingMaskIntoConstraints="NO" id="S51-gF-Igo">
-                                                    <rect key="frame" x="98" y="381" width="25" height="25"/>
-                                                </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xa4-K7-Qzv">
                                                     <rect key="frame" x="8" y="421" width="367" height="1"/>
                                                     <color key="backgroundColor" red="0.20392156859999999" green="0.28627450980000002" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -99,38 +96,36 @@
                                                 <constraint firstItem="RW1-jo-Vtn" firstAttribute="leading" secondItem="OQa-iC-ZzF" secondAttribute="leading" constant="8" id="Cdp-S0-wmW"/>
                                                 <constraint firstItem="QDK-Ad-ZKL" firstAttribute="leading" secondItem="OQa-iC-ZzF" secondAttribute="leading" id="DC2-4i-nbE"/>
                                                 <constraint firstItem="88l-ap-4T1" firstAttribute="leading" secondItem="OQa-iC-ZzF" secondAttribute="leading" constant="8" id="Eto-e7-az1"/>
-                                                <constraint firstItem="S51-gF-Igo" firstAttribute="height" secondItem="h3n-Fn-OeS" secondAttribute="height" id="FWC-iZ-5hn"/>
                                                 <constraint firstItem="Ceh-RK-QtZ" firstAttribute="leading" secondItem="88l-ap-4T1" secondAttribute="trailing" constant="8" id="HxI-3H-xEQ"/>
                                                 <constraint firstAttribute="bottom" secondItem="RW1-jo-Vtn" secondAttribute="bottom" constant="24" id="Iy5-xn-u72"/>
                                                 <constraint firstItem="Kyn-Vn-iWb" firstAttribute="height" secondItem="h3n-Fn-OeS" secondAttribute="height" id="K3p-oO-MZO"/>
                                                 <constraint firstItem="RW1-jo-Vtn" firstAttribute="top" secondItem="oaj-xI-QJq" secondAttribute="bottom" constant="8" id="KAU-EU-FYs"/>
-                                                <constraint firstItem="S51-gF-Igo" firstAttribute="width" secondItem="h3n-Fn-OeS" secondAttribute="width" id="KZX-gr-CqT"/>
-                                                <constraint firstItem="S51-gF-Igo" firstAttribute="leading" secondItem="Kyn-Vn-iWb" secondAttribute="trailing" constant="20" id="MiS-Qp-Nzl"/>
                                                 <constraint firstItem="Kyn-Vn-iWb" firstAttribute="leading" secondItem="h3n-Fn-OeS" secondAttribute="trailing" constant="20" id="RSS-sb-vHt"/>
                                                 <constraint firstAttribute="trailing" secondItem="xa4-K7-Qzv" secondAttribute="trailing" id="UzG-bK-8CF"/>
-                                                <constraint firstItem="S51-gF-Igo" firstAttribute="centerY" secondItem="h3n-Fn-OeS" secondAttribute="centerY" id="WGk-r6-70A"/>
                                                 <constraint firstItem="oaj-xI-QJq" firstAttribute="top" secondItem="xa4-K7-Qzv" secondAttribute="bottom" constant="15" id="hTQ-Ud-ZHL"/>
                                                 <constraint firstItem="Kyn-Vn-iWb" firstAttribute="width" secondItem="h3n-Fn-OeS" secondAttribute="width" id="lYZ-x7-bs5"/>
                                                 <constraint firstItem="h3n-Fn-OeS" firstAttribute="top" secondItem="QDK-Ad-ZKL" secondAttribute="bottom" constant="15" id="oev-1T-bdb"/>
                                                 <constraint firstAttribute="trailing" secondItem="QDK-Ad-ZKL" secondAttribute="trailing" id="pi6-ci-EYx"/>
                                                 <constraint firstItem="QDK-Ad-ZKL" firstAttribute="top" secondItem="88l-ap-4T1" secondAttribute="bottom" constant="8" id="qOZ-B7-cQT"/>
                                                 <constraint firstItem="Ceh-RK-QtZ" firstAttribute="centerY" secondItem="88l-ap-4T1" secondAttribute="centerY" id="slm-pK-Ncj"/>
-                                                <constraint firstItem="xa4-K7-Qzv" firstAttribute="top" secondItem="S51-gF-Igo" secondAttribute="bottom" constant="15" id="wfo-ZO-mkd"/>
                                                 <constraint firstItem="xa4-K7-Qzv" firstAttribute="leading" secondItem="OQa-iC-ZzF" secondAttribute="leading" constant="8" id="zIs-zO-GfU"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="captionLabel" destination="RW1-jo-Vtn" id="ZwM-RK-TU2"/>
-                                            <outlet property="commentImageView" destination="Kyn-Vn-iWb" id="YXO-qv-cO1"/>
-                                            <outlet property="likeCountButton" destination="oaj-xI-QJq" id="il0-07-X3A"/>
-                                            <outlet property="likeImageView" destination="h3n-Fn-OeS" id="HWX-oG-RzC"/>
-                                            <outlet property="nameLabel" destination="Ceh-RK-QtZ" id="Yak-JX-oqs"/>
-                                            <outlet property="postImageView" destination="QDK-Ad-ZKL" id="zxl-Pj-q6t"/>
-                                            <outlet property="profileImageView" destination="88l-ap-4T1" id="1Rj-WV-jAP"/>
-                                            <outlet property="shareImageView" destination="S51-gF-Igo" id="Wws-8e-wdX"/>
+                                            <outlet property="captionLabel" destination="RW1-jo-Vtn" id="b9b-m1-ppP"/>
+                                            <outlet property="commentImageView" destination="Kyn-Vn-iWb" id="HqX-lu-VQD"/>
+                                            <outlet property="likeCountButton" destination="oaj-xI-QJq" id="YGt-Rp-CWd"/>
+                                            <outlet property="likeImageView" destination="h3n-Fn-OeS" id="KeV-0y-pSa"/>
+                                            <outlet property="nameLabel" destination="Ceh-RK-QtZ" id="ddq-t5-b8E"/>
+                                            <outlet property="postImageView" destination="QDK-Ad-ZKL" id="qsi-xn-avg"/>
+                                            <outlet property="profileImageView" destination="88l-ap-4T1" id="LkY-c1-qaQ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="oCz-LK-P5G" id="WTW-WU-NTS"/>
+                                    <outlet property="delegate" destination="oCz-LK-P5G" id="XA0-IK-8yM"/>
+                                </connections>
                             </tableView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="bku-4F-pV5">
                                 <rect key="frame" x="177" y="323" width="20" height="20"/>
@@ -150,24 +145,25 @@
                         <barButtonItem key="leftBarButtonItem" title="Log Out" id="LCX-Nj-RZY">
                             <color key="tintColor" red="0.20392156859999999" green="0.28627450980000002" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="logout:" destination="oCz-LK-P5G" id="ybC-in-VhU"/>
+                                <action selector="pressedLogout:" destination="oCz-LK-P5G" id="sdw-Oo-3NF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="activityIndicatorView" destination="bku-4F-pV5" id="gAb-Pv-b9E"/>
-                        <outlet property="tableView" destination="DKU-uj-1BC" id="Ggo-f8-AcG"/>
-                        <segue destination="UBX-BK-zm0" kind="show" identifier="CommentSegue" id="J0N-PZ-jaM"/>
+                        <outlet property="activityIndicatorView" destination="bku-4F-pV5" id="Vlt-ok-V1l"/>
+                        <outlet property="tableView" destination="DKU-uj-1BC" id="fqy-Qw-osg"/>
+                        <segue destination="ixB-e0-UFI" kind="unwind" identifier="unwindToSignInVC" unwindAction="unwindToSignInVC:" id="Nhj-5b-ae6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="28o-Ct-t7x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ixB-e0-UFI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3120.8000000000002" y="-934.18290854572717"/>
         </scene>
         <!--Comment View Controller-->
         <scene sceneID="lbf-6F-BSd">
             <objects>
-                <viewController id="UBX-BK-zm0" customClass="CommentViewController" customModule="Blocstagram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="UBX-BK-zm0" customClass="CommentViewController" customModule="InstaClone" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MmO-s0-6mT"/>
                         <viewControllerLayoutGuide type="bottom" id="Mg1-Tl-mZj"/>
@@ -180,7 +176,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="617"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommentCell" rowHeight="70" id="vUY-TM-moc" customClass="CommentTableViewCell" customModule="Blocstagram" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommentCell" rowHeight="70" id="vUY-TM-moc" customClass="CommentTableViewCell" customModule="InstaClone" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vUY-TM-moc" id="cAZ-zB-egW">
@@ -311,7 +307,7 @@
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="d2G-Jq-76y">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -330,6 +326,5 @@
         <image name="Home_Selected" width="21" height="23"/>
         <image name="like" width="46" height="41"/>
         <image name="profile" width="512" height="512"/>
-        <image name="share" width="128" height="128"/>
     </resources>
 </document>

@@ -7,7 +7,7 @@
 @implementation SignUpViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];    
+    [super viewDidLoad];
     self.userNameField.delegate = self;
     self.emailField.delegate = self;
     self.passwordField.delegate = self;
@@ -18,7 +18,7 @@
     CGFloat side = self.profileImageView.frame.size.width / 2;
     self.profileImageView.frame = CGRectMake(0, 0, side, side);
     self.profileImageView.layer.cornerRadius = side;
-    self.profileImageView.clipsToBounds = YES;    
+    self.profileImageView.clipsToBounds = YES;
     [self.profileImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageView)]];
 }
 
@@ -73,21 +73,27 @@
         newUser.password = self.passwordField.text;
         
         if (self.profileImageView.image != [UIImage imageNamed:@"camera.png"]) {
-            // загружаем картинку в файл сервис
-            // создаем файл-референс у юзера на загруженную картинку
+            NSString *profileImageFileName = [NSString stringWithFormat:@"/InstaCloneProfilePictures/%@", [[NSUUID UUID] UUIDString]];
+            NSData *data = UIImagePNGRepresentation(self.profileImageView.image);
+            [backendless.file saveFile:profileImageFileName content:data response:^(BackendlessFile *profilePicture) {
+                [newUser setProperty:@"profilePicture" object:profilePicture.fileURL];
+                [backendless.userService registerUser:newUser response:^(BackendlessUser *user) {
+                    [self performSegueWithIdentifier:@"showTabBar" sender:nil];
+                } error:^(Fault *fault) {
+                    [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+                }];
+            } error:^(Fault *fault) {
+                [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+            }];
         }
         else {
-            // создаем файл-референс у юзера на картинку InstaCloneProfilePictures/defaultProfilePicture.png
+            [newUser setProperty:@"profilePicture" object:@"InstaCloneProfilePictures/defaultProfilePicture.png"];
+            [backendless.userService registerUser:newUser response:^(BackendlessUser *user) {
+                [self performSegueWithIdentifier:@"showTabBar" sender:nil];
+            } error:^(Fault *fault) {
+                [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+            }];
         }
-        
-        
-        [backendless.userService setStayLoggedIn:YES];
-        [backendless.userService registerUser:newUser
-                                     response:^(BackendlessUser *user) {
-                                         [self performSegueWithIdentifier:@"showTabBar" sender:nil];
-                                     } error:^(Fault *fault) {
-                                         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
-                                     }];
     }
     else {
         [alertViewController showErrorAlert:nil title:@"Invalid user name, email or password" message:@"Please make sure you've entered your name, email and password correctly" target:self];
