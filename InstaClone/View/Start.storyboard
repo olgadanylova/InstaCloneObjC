@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -130,10 +131,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="dkY-qo-6mL">
-                                <rect key="frame" x="16" y="52" width="343" height="128"/>
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="dkY-qo-6mL">
+                                <rect key="frame" x="123.5" y="52" width="128" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="SwO-od-NnO"/>
+                                    <constraint firstAttribute="width" secondItem="dkY-qo-6mL" secondAttribute="height" multiplier="1:1" id="od3-A5-3X1"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zuR-6e-gNT">
@@ -200,13 +202,12 @@
                         <constraints>
                             <constraint firstItem="5Sd-sb-Ggu" firstAttribute="leading" secondItem="aCe-ft-u6S" secondAttribute="leading" constant="16" id="9fy-2Z-aag"/>
                             <constraint firstItem="zuR-6e-gNT" firstAttribute="leading" secondItem="aCe-ft-u6S" secondAttribute="leading" id="GOB-ms-oPl"/>
-                            <constraint firstItem="dkY-qo-6mL" firstAttribute="leading" secondItem="aCe-ft-u6S" secondAttribute="leading" constant="16" id="JlP-HG-xWE"/>
-                            <constraint firstItem="dkY-qo-6mL" firstAttribute="top" secondItem="3yk-Ls-uTD" secondAttribute="bottom" constant="32" id="Ul6-RQ-8cU"/>
+                            <constraint firstItem="dkY-qo-6mL" firstAttribute="top" secondItem="3yk-Ls-uTD" secondAttribute="bottom" constant="32" id="bL3-Zf-gdZ"/>
                             <constraint firstItem="cJn-V3-j5t" firstAttribute="top" secondItem="zuR-6e-gNT" secondAttribute="bottom" id="bSk-Nq-qev"/>
-                            <constraint firstItem="5Sd-sb-Ggu" firstAttribute="top" secondItem="dkY-qo-6mL" secondAttribute="bottom" constant="32" id="fnx-jr-rZQ"/>
                             <constraint firstAttribute="trailing" secondItem="5Sd-sb-Ggu" secondAttribute="trailing" constant="16" id="jG9-X5-Ovr"/>
-                            <constraint firstAttribute="trailing" secondItem="dkY-qo-6mL" secondAttribute="trailing" constant="16" id="jdJ-Xh-Qms"/>
+                            <constraint firstItem="dkY-qo-6mL" firstAttribute="centerX" secondItem="aCe-ft-u6S" secondAttribute="centerX" id="qhZ-rf-LPY"/>
                             <constraint firstAttribute="trailing" secondItem="zuR-6e-gNT" secondAttribute="trailing" id="v1o-AY-qTC"/>
+                            <constraint firstItem="5Sd-sb-Ggu" firstAttribute="top" secondItem="dkY-qo-6mL" secondAttribute="bottom" constant="32" id="yec-jx-NOa"/>
                         </constraints>
                     </view>
                     <connections>
@@ -219,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PPn-Yb-hs1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-180" y="969"/>
+            <point key="canvasLocation" x="-180" y="968.36581709145435"/>
         </scene>
         <!--TabBarID-->
         <scene sceneID="PPG-mW-Tmk">
@@ -250,7 +251,7 @@
     <resources>
         <image name="aaron_paul" width="3024" height="4032"/>
         <image name="backendlessLogo" width="3097" height="421"/>
-        <image name="user" width="512" height="512"/>
+        <image name="camera" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0O9-zG-N6n"/>

@@ -45,11 +45,11 @@
                               response:^(BackendlessUser *user) {
                                   [self performSegueWithIdentifier:@"showTabBar" sender:nil];
                               } error:^(Fault *fault) {
-                                  [alertViewController showErrorAlert:fault.faultCode :nil :fault.message targer:self];
+                                  [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
                               }];        
     }
     else {
-        [alertViewController showErrorAlert:nil :@"Invalid email or password" :@"Please make sure you've entered your email and password correctly" targer:self];
+        [alertViewController showErrorAlert:nil title:@"Invalid email or password" message:@"Please make sure you've entered your email and password correctly" target:self];
     }
 }
 
