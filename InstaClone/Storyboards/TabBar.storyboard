@@ -17,6 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="F0c-Qg-zXL" kind="relationship" relationship="viewControllers" id="6ib-2D-JRO"/>
@@ -32,7 +34,7 @@
         <scene sceneID="GVR-Dh-Voz">
             <objects>
                 <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="NavigationHome" id="F0c-Qg-zXL" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" id="3rt-LD-RbA"/>
+                    <tabBarItem key="tabBarItem" title="" image="home" id="3rt-LD-RbA"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ipj-L9-Mwr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -42,7 +44,7 @@
         <scene sceneID="nuu-Ym-8UC">
             <objects>
                 <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="NavigationCamera" id="iVQ-d8-VAh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Camera" id="Qih-Fb-6Qc"/>
+                    <tabBarItem key="tabBarItem" title="" image="photo" id="Qih-Fb-6Qc"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1QJ-Bw-Yrq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -52,11 +54,16 @@
         <scene sceneID="qeS-0I-ycT">
             <objects>
                 <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="NavigationProfile" id="S8H-Np-Z7S" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" id="JoY-wR-h4W"/>
+                    <tabBarItem key="tabBarItem" title="" image="profile" id="JoY-wR-h4W"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xWQ-hP-b0U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1982" y="235"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="home" width="21" height="23"/>
+        <image name="photo" width="22" height="23"/>
+        <image name="profile" width="20" height="21"/>
+    </resources>
 </document>

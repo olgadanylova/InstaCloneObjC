@@ -7,6 +7,11 @@
 #define API_KEY @"77CCF20A-A5AB-FF09-FFFC-710027274900"
 #define HOST_URL @"http://api.backendless.com"
 
+@interface SignInViewController() {
+    NSTimer *timer;
+}
+@end
+
 @implementation SignInViewController
 
 - (void)viewDidLoad {
@@ -18,6 +23,9 @@
     
     backendless.hostURL = HOST_URL;
     [backendless initApp:APP_ID APIKey:API_KEY];
+    if (backendless.userService.currentUser) {
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(showTabBar) userInfo:nil repeats:NO];
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -35,15 +43,19 @@
     return NO;
 }
 
+- (void)showTabBar {
+    [self performSegueWithIdentifier:@"showTabBar" sender:nil];
+}
+
 - (IBAction)pressedSignIn:(id)sender {
     if (self.emailField.text.length > 0 && self.passwordField.text > 0) {
+        [backendless.userService setStayLoggedIn:YES];
         NSString *email = self.emailField.text;
         NSString *password = self.passwordField.text;
-        [backendless.userService setStayLoggedIn:YES];
         [backendless.userService login:email
                               password:password
                               response:^(BackendlessUser *user) {
-                                  [self performSegueWithIdentifier:@"showTabBar" sender:nil];
+                                  [self showTabBar];
                               } error:^(Fault *fault) {
                                   [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
                               }];        

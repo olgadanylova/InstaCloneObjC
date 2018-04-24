@@ -34,10 +34,15 @@
 - (void)showTakePhotoAlert:(UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate> *)target {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *useCamera = [UIAlertAction actionWithTitle:@"Use camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        UIImagePickerController *cameraPicker = [UIImagePickerController new];
-        cameraPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        cameraPicker.delegate = target;
-        [target presentViewController:cameraPicker animated:YES completion:nil];
+        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            [self showErrorAlert:nil title:@"No device found" message:@"Camera is not available" target:self];
+        }
+        else {
+            UIImagePickerController *cameraPicker = [UIImagePickerController new];
+            cameraPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            cameraPicker.delegate = target;
+            [target presentViewController:cameraPicker animated:YES completion:nil];
+        }
     }];
     UIAlertAction *usePhotoLibrary = [UIAlertAction actionWithTitle:@"Use Photo Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UIImagePickerController *cameraPicker = [UIImagePickerController new];

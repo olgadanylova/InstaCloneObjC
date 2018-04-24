@@ -11,11 +11,14 @@
 		0F7A63341E769BB6007B6B07 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7A63331E769BB6007B6B07 /* AppDelegate.m */; };
 		0F7A633C1E769BB6007B6B07 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F7A633B1E769BB6007B6B07 /* Assets.xcassets */; };
 		0F7A633F1E769BB6007B6B07 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F7A633D1E769BB6007B6B07 /* LaunchScreen.storyboard */; };
+		5A3DFDCD208F47150071544C /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3DFDCC208F47150071544C /* CameraViewController.m */; };
+		5A3DFDD1208F63C20071544C /* ColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3DFDD0208F63C20071544C /* ColorHelper.m */; };
+		5ADC1914208F89D600583E5B /* PictureHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC1913208F89D600583E5B /* PictureHelper.m */; };
 		5E1BF5FC208E03AB00FF92E6 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF5FB208E03AB00FF92E6 /* Post.m */; };
 		5E1BF5FF208E03C200FF92E6 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF5FE208E03C200FF92E6 /* Comment.m */; };
 		5E1BF602208E03C900FF92E6 /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF601208E03C900FF92E6 /* Like.m */; };
 		5E1BF605208E20A600FF92E6 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF604208E20A600FF92E6 /* HomeViewController.m */; };
-		5E1BF609208E2D1500FF92E6 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF608208E2D1500FF92E6 /* HomeTableViewCell.m */; };
+		5E1BF609208E2D1500FF92E6 /* HomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF608208E2D1500FF92E6 /* HomeCell.m */; };
 		5EB7BAD52089DB930073FC64 /* backendless.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB7B9E52089DB930073FC64 /* backendless.a */; };
 		5EB7BAE72089DC540073FC64 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EB7BAE22089DC540073FC64 /* Camera.storyboard */; };
 		5EB7BAE82089DC540073FC64 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EB7BAE32089DC540073FC64 /* Home.storyboard */; };
@@ -35,6 +38,12 @@
 		0F7A633B1E769BB6007B6B07 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F7A633E1E769BB6007B6B07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0F7A63401E769BB6007B6B07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A3DFDCB208F47150071544C /* CameraViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		5A3DFDCC208F47150071544C /* CameraViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		5A3DFDCF208F63C20071544C /* ColorHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorHelper.h; sourceTree = "<group>"; };
+		5A3DFDD0208F63C20071544C /* ColorHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorHelper.m; sourceTree = "<group>"; };
+		5ADC1912208F89D600583E5B /* PictureHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PictureHelper.h; sourceTree = "<group>"; };
+		5ADC1913208F89D600583E5B /* PictureHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PictureHelper.m; sourceTree = "<group>"; };
 		5E1BF5FA208E03AB00FF92E6 /* Post.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		5E1BF5FB208E03AB00FF92E6 /* Post.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		5E1BF5FD208E03C200FF92E6 /* Comment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
@@ -43,8 +52,8 @@
 		5E1BF601208E03C900FF92E6 /* Like.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Like.m; sourceTree = "<group>"; };
 		5E1BF603208E20A600FF92E6 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		5E1BF604208E20A600FF92E6 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		5E1BF607208E2D1500FF92E6 /* HomeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
-		5E1BF608208E2D1500FF92E6 /* HomeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCell.m; sourceTree = "<group>"; };
+		5E1BF607208E2D1500FF92E6 /* HomeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeCell.h; sourceTree = "<group>"; };
+		5E1BF608208E2D1500FF92E6 /* HomeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeCell.m; sourceTree = "<group>"; };
 		5EB7B9E52089DB930073FC64 /* backendless.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = backendless.a; sourceTree = "<group>"; };
 		5EB7B9E72089DB930073FC64 /* AbstractProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractProperty.h; sourceTree = "<group>"; };
 		5EB7B9E82089DB930073FC64 /* AbstractQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractQuery.h; sourceTree = "<group>"; };
@@ -329,10 +338,11 @@
 		0F7A632E1E769BB6007B6B07 /* InstaClone */ = {
 			isa = PBXGroup;
 			children = (
+				5A3DFDCE208F63A90071544C /* Utils */,
 				5E1BF606208E2CF100FF92E6 /* Cells */,
 				5E1BF5F9208E037D00FF92E6 /* Data */,
 				5EB7BAEC2089E23A0073FC64 /* View Controllers */,
-				5EB7BAE12089DC540073FC64 /* View */,
+				5EB7BAE12089DC540073FC64 /* Storyboards */,
 				0F7A63321E769BB6007B6B07 /* AppDelegate.h */,
 				0F7A63331E769BB6007B6B07 /* AppDelegate.m */,
 				0F7A633B1E769BB6007B6B07 /* Assets.xcassets */,
@@ -351,6 +361,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		5A3DFDCE208F63A90071544C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5A3DFDCF208F63C20071544C /* ColorHelper.h */,
+				5A3DFDD0208F63C20071544C /* ColorHelper.m */,
+				5ADC1912208F89D600583E5B /* PictureHelper.h */,
+				5ADC1913208F89D600583E5B /* PictureHelper.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		5E1BF5F9208E037D00FF92E6 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,8 +388,8 @@
 		5E1BF606208E2CF100FF92E6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				5E1BF607208E2D1500FF92E6 /* HomeTableViewCell.h */,
-				5E1BF608208E2D1500FF92E6 /* HomeTableViewCell.m */,
+				5E1BF607208E2D1500FF92E6 /* HomeCell.h */,
+				5E1BF608208E2D1500FF92E6 /* HomeCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -635,7 +656,7 @@
 			path = include;
 			sourceTree = "<group>";
 		};
-		5EB7BAE12089DC540073FC64 /* View */ = {
+		5EB7BAE12089DC540073FC64 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
 				5EB7BAE22089DC540073FC64 /* Camera.storyboard */,
@@ -644,7 +665,7 @@
 				5EB7BAE52089DC540073FC64 /* Start.storyboard */,
 				5EB7BAE62089DC540073FC64 /* TabBar.storyboard */,
 			);
-			path = View;
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		5EB7BAEC2089E23A0073FC64 /* View Controllers */ = {
@@ -658,6 +679,8 @@
 				5EF66A3B208A347A00D33BFD /* SignUpViewController.m */,
 				5E1BF603208E20A600FF92E6 /* HomeViewController.h */,
 				5E1BF604208E20A600FF92E6 /* HomeViewController.m */,
+				5A3DFDCB208F47150071544C /* CameraViewController.h */,
+				5A3DFDCC208F47150071544C /* CameraViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -739,10 +762,13 @@
 			files = (
 				5E1BF5FF208E03C200FF92E6 /* Comment.m in Sources */,
 				5EB7BAEF2089E25B0073FC64 /* SignInViewController.m in Sources */,
-				5E1BF609208E2D1500FF92E6 /* HomeTableViewCell.m in Sources */,
+				5E1BF609208E2D1500FF92E6 /* HomeCell.m in Sources */,
 				5EF66A3F208A386500D33BFD /* AlertViewController.m in Sources */,
 				0F7A63341E769BB6007B6B07 /* AppDelegate.m in Sources */,
 				5EF66A3C208A347A00D33BFD /* SignUpViewController.m in Sources */,
+				5A3DFDCD208F47150071544C /* CameraViewController.m in Sources */,
+				5A3DFDD1208F63C20071544C /* ColorHelper.m in Sources */,
+				5ADC1914208F89D600583E5B /* PictureHelper.m in Sources */,
 				5E1BF605208E20A600FF92E6 /* HomeViewController.m in Sources */,
 				5E1BF5FC208E03AB00FF92E6 /* Post.m in Sources */,
 				5E1BF602208E03C900FF92E6 /* Like.m in Sources */,

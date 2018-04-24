@@ -38,12 +38,7 @@
 }
 
 - (IBAction)tapImageView {
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [alertViewController showErrorAlert:nil title:@"No device found" message:@"Camera is not available" target:self];
-    }
-    else {
-        [alertViewController showTakePhotoAlert:self];
-    }
+    [alertViewController showTakePhotoAlert:self];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
