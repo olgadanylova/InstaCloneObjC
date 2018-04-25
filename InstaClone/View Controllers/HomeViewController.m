@@ -1,7 +1,7 @@
 
 #import "HomeViewController.h"
 #import "AlertViewController.h"
-#import "HomeCell.h"
+#import "PostCell.h"
 #import "PictureHelper.h"
 #import "Post.h"
 #import "Backendless.h"
@@ -20,11 +20,14 @@
     [self loadPosts];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self loadPosts];
+}
+
 - (void)loadPosts {
-    [self.activityIndicator startAnimating];
     [[backendless.data of:[Post class]] find:^(NSArray *postsFound) {
         self->posts = [NSArray arrayWithArray:postsFound];
-        [self.activityIndicator stopAnimating];
         [self.tableView reloadData];
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
@@ -47,46 +50,25 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    HomeCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"HomeCell" forIndexPath:indexPath];
+    PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"HomeCell" forIndexPath:indexPath];
     Post *post = [posts objectAtIndex:indexPath.row];
-    
-    cell.nameLabel.text = [self getUserName:post];
-    
-    
-    
-    
-    [pictureHelper setProfilePicture:post. forCell:<#(UITableViewCell *)#>]
-    
-    
-    /*[self getUserProfilePhoto];
-     self.nameLabel.text = [self getUserName];
-     [self getPostPhoto];
-     self.captionLabel.text = [self getCaption];
-     if (self.post.likes) {
-     NSString *likesTitle = [NSString stringWithFormat:@"%lu Likes", (unsigned long)[self.post.likes count]];
-     [self.likeCountButton setTitle:likesTitle forState:UIControlStateNormal];
-     }
-     else {
-     [self.likeCountButton setTitle:@"0 Likes" forState:UIControlStateNormal];
-     }*/
-    
-    
-    return cell;
-}
-
-- (void)getUserProfilePhoto:(Post *)post forCell:(HomeCell *)cell {
     [backendless.userService findById:post.ownerId response:^(BackendlessUser *user) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSString *profilePicture = [user getProperty:@"profilePicture"];
-            NSURL *imageURL = [NSURL URLWithString:profilePicture];
-            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                cell.profileImageView.image = [UIImage imageWithData:imageData];
-            });
-        });
+        [pictureHelper setPostPhoto:post.photo forCell:cell];
+        cell.nameLabel.text = [self getUserName:post];
+        [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
+        cell.captionLabel.text = post.caption;
+        if (post.likes) {
+            NSString *likesTitle = [NSString stringWithFormat:@"%lu Likes", (unsigned long)[post.likes count]];
+            [cell.likeCountButton setTitle:likesTitle forState:UIControlStateNormal];
+        }
+        else {
+            [cell.likeCountButton setTitle:@"0 Likes" forState:UIControlStateNormal];
+        }
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
     }];
+    
+    return cell;
 }
 
 - (NSString *)getUserName:(Post *)post {
@@ -96,22 +78,5 @@
     }
     return @"";
 }
-
-//- (void)getPostPhoto {
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSURL *imageURL = [NSURL URLWithString:self.post.photo];
-//        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-//        dispatch_sync(dispatch_get_main_queue(), ^{
-//            self.imageView.image = [UIImage imageWithData:imageData];
-//        });
-//    });
-//}
-
-//- (NSString *)getCaption {
-//    if (self.post.caption) {
-//        return self.post.caption;
-//    }
-//    return @"";
-//}
 
 @end

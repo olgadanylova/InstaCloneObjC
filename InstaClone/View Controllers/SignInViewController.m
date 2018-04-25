@@ -23,7 +23,8 @@
     
     backendless.hostURL = HOST_URL;
     [backendless initApp:APP_ID APIKey:API_KEY];
-    if (backendless.userService.currentUser) {
+    [backendless.userService setStayLoggedIn:YES];
+    if (backendless.userService.isValidUserToken && backendless.userService.currentUser) {
         timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(showTabBar) userInfo:nil repeats:NO];
     }
 }
@@ -49,12 +50,13 @@
 
 - (IBAction)pressedSignIn:(id)sender {
     if (self.emailField.text.length > 0 && self.passwordField.text > 0) {
-        [backendless.userService setStayLoggedIn:YES];
         NSString *email = self.emailField.text;
         NSString *password = self.passwordField.text;
         [backendless.userService login:email
                               password:password
                               response:^(BackendlessUser *user) {
+                                  self.emailField.text = @"";
+                                  self.passwordField.text = @"";
                                   [self showTabBar];
                               } error:^(Fault *fault) {
                                   [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];

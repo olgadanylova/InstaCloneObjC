@@ -1,11 +1,12 @@
 
-#import "HomeCell.h"
+#import "PostCell.h"
 #import "AlertViewController.h"
 
-@implementation HomeCell
+@implementation PostCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.activityIndicator.hidden = YES;
     
     UITapGestureRecognizer *commentTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleCommentImageViewTap)];
     [self.commentImageView addGestureRecognizer:commentTapGesture];

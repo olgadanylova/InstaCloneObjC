@@ -50,8 +50,19 @@
         cameraPicker.delegate = target;
         [target presentViewController:cameraPicker animated:YES completion:nil];
     }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:useCamera];
     [alert addAction:usePhotoLibrary];
+    [alert addAction:cancel];
+    [target presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)showSegueAlert:(NSString *)title message:(NSString *)message segueIdentifier:(NSString *)segueIdentifier target:(UIViewController *)target {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *OK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [target performSegueWithIdentifier:segueIdentifier sender:nil];
+    }];
+    [alert addAction:OK];
     [target presentViewController:alert animated:YES completion:nil];
 }
 
