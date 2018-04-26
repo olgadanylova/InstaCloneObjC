@@ -6,7 +6,11 @@
 
 @interface PictureHelper : NSObject
 
-+(instancetype)sharedInstance;
--(void)setProfilePicture:(NSString *)profilePicture forCell:(UITableViewCell *)cell;
++ (instancetype)sharedInstance;
+- (void)setProfilePicture:(NSString *)profilePicture forCell:(UITableViewCell *)cell;
+- (void)setPostPhoto:(NSString *)photo forCell:(UITableViewCell *)cell;
+- (UIImage *)scaleAndRotateImage:(UIImage *)image;
+- (void)saveImageToUserDefaults:(UIImage *)image withKey:(NSString *)key;
+- (UIImage *)getImageFromUserDefaults:(NSString *)key;
 
 @end

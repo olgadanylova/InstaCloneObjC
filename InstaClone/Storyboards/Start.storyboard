@@ -35,7 +35,7 @@
                                         </constraints>
                                         <color key="textColor" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kd2-66-Tj3">
                                         <rect key="frame" x="0.0" y="50" width="343" height="30"/>
@@ -111,8 +111,8 @@
                         <outlet property="emailField" destination="SAV-Nt-TEP" id="ybg-6m-2hz"/>
                         <outlet property="passwordField" destination="Kd2-66-Tj3" id="T8m-hz-xo7"/>
                         <outlet property="signInButton" destination="IlT-dE-ljp" id="W8v-SH-Q1f"/>
-                        <segue destination="mWa-AF-EN0" kind="presentation" identifier="showTabBar" id="2ch-lk-QE7"/>
-                        <segue destination="LMg-wW-noF" kind="showDetail" identifier="showSignUp" id="xCL-TH-uYU"/>
+                        <segue destination="mWa-AF-EN0" kind="presentation" identifier="ShowTabBar" id="2ch-lk-QE7"/>
+                        <segue destination="LMg-wW-noF" kind="showDetail" identifier="ShowSignUp" id="xCL-TH-uYU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0HK-Ng-qfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -161,7 +161,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="name"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tGY-Zt-ndy">
                                         <rect key="frame" x="0.0" y="50" width="343" height="30"/>
@@ -170,7 +170,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WFg-L4-0jz">
                                         <rect key="frame" x="0.0" y="100" width="343" height="30"/>
@@ -179,7 +179,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qr2-Cc-SuH">
                                         <rect key="frame" x="0.0" y="150" width="343" height="44"/>
@@ -197,30 +197,38 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="jKd-yU-eej">
+                                <rect key="frame" x="169" y="446" width="37" height="37"/>
+                                <color key="color" red="0.17254901959999999" green="0.24313725489999999" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="jKd-yU-eej" firstAttribute="centerX" secondItem="aCe-ft-u6S" secondAttribute="centerX" id="25R-Uz-agp"/>
                             <constraint firstItem="5Sd-sb-Ggu" firstAttribute="leading" secondItem="aCe-ft-u6S" secondAttribute="leading" constant="16" id="9fy-2Z-aag"/>
                             <constraint firstItem="zuR-6e-gNT" firstAttribute="leading" secondItem="aCe-ft-u6S" secondAttribute="leading" id="GOB-ms-oPl"/>
                             <constraint firstItem="dkY-qo-6mL" firstAttribute="top" secondItem="3yk-Ls-uTD" secondAttribute="bottom" constant="32" id="bL3-Zf-gdZ"/>
                             <constraint firstItem="cJn-V3-j5t" firstAttribute="top" secondItem="zuR-6e-gNT" secondAttribute="bottom" id="bSk-Nq-qev"/>
                             <constraint firstAttribute="trailing" secondItem="5Sd-sb-Ggu" secondAttribute="trailing" constant="16" id="jG9-X5-Ovr"/>
+                            <constraint firstItem="jKd-yU-eej" firstAttribute="top" secondItem="Qr2-Cc-SuH" secondAttribute="bottom" constant="40" id="nsA-Hb-W6N"/>
                             <constraint firstItem="dkY-qo-6mL" firstAttribute="centerX" secondItem="aCe-ft-u6S" secondAttribute="centerX" id="qhZ-rf-LPY"/>
                             <constraint firstAttribute="trailing" secondItem="zuR-6e-gNT" secondAttribute="trailing" id="v1o-AY-qTC"/>
                             <constraint firstItem="5Sd-sb-Ggu" firstAttribute="top" secondItem="dkY-qo-6mL" secondAttribute="bottom" constant="32" id="yec-jx-NOa"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="jKd-yU-eej" id="czn-iC-mvH"/>
                         <outlet property="emailField" destination="tGY-Zt-ndy" id="LVK-ZG-emb"/>
                         <outlet property="passwordField" destination="WFg-L4-0jz" id="xMb-dp-ReL"/>
                         <outlet property="profileImageView" destination="dkY-qo-6mL" id="UIB-jP-NGJ"/>
                         <outlet property="userNameField" destination="puA-88-zD6" id="q4K-hZ-4Mp"/>
-                        <segue destination="mWa-AF-EN0" kind="presentation" identifier="showTabBar" id="0O9-zG-N6n"/>
+                        <segue destination="LhS-8q-lml" kind="unwind" identifier="unwindToSignInVC" unwindAction="unwindToSignInVC:" id="4sS-Bx-1d6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PPn-Yb-hs1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="LhS-8q-lml" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-180" y="968.36581709145435"/>
+            <point key="canvasLocation" x="759" y="830"/>
         </scene>
         <!--TabBarID-->
         <scene sceneID="PPG-mW-Tmk">
@@ -228,7 +236,7 @@
                 <viewControllerPlaceholder storyboardName="TabBar" referencedIdentifier="TabBarID" id="mWa-AF-EN0" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jD0-EY-fXh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1656" y="101.64917541229386"/>
+            <point key="canvasLocation" x="1421" y="79"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Nff-zH-1iD">
@@ -253,7 +261,4 @@
         <image name="backendlessLogo" width="3097" height="421"/>
         <image name="camera" width="512" height="512"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="0O9-zG-N6n"/>
-    </inferredMetricsTieBreakers>
 </document>

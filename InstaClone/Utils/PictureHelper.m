@@ -1,6 +1,9 @@
 
 #import "PictureHelper.h"
 #import "PostCell.h"
+#import "LikeCell.h"
+
+#define IMAGES_KEY @"instaCloneImages"
 
 @implementation PictureHelper
 
@@ -14,26 +17,46 @@
 }
 
 - (void)setProfilePicture:(NSString *)profilePicture forCell:(UITableViewCell *)cell {
-    if ([cell isKindOfClass:[PostCell class]]) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:profilePicture]]];
+            UIImage *image;
+            if ([self getImageFromUserDefaults:profilePicture]) {
+                image = [self getImageFromUserDefaults:profilePicture];
+            }
+            else {
+                image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:profilePicture]]];
+                [self saveImageToUserDefaults:image withKey:profilePicture];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
-                ((PostCell *)cell).profileImageView.image = image;
+                if ([cell isKindOfClass:[PostCell class]]) {
+                    ((PostCell *)cell).profileImageView.image = image;
+                }
+                else if ([cell isKindOfClass:[LikeCell class]]) {
+                    ((LikeCell *)cell).profileImageView.image = image;
+                }                
             });
         });
-    }
 }
 
 - (void)setPostPhoto:(NSString *)photo forCell:(UITableViewCell *)cell {
     if ([cell isKindOfClass:[PostCell class]]) {
-        ((PostCell *)cell).activityIndicator.hidden = NO;
-        [((PostCell *)cell).activityIndicator startAnimating];
+        PostCell *postCell = (PostCell *)cell;
+        if (!postCell.postImageView.image) {
+            postCell.activityIndicator.hidden = NO;
+            [postCell.activityIndicator startAnimating];
+        }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:photo]]];
+            UIImage *image;
+            if ([self getImageFromUserDefaults:photo]) {
+                image = [self getImageFromUserDefaults:photo];
+            }
+            else {
+                image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:photo]]];
+                [self saveImageToUserDefaults:image withKey:photo];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
-                ((PostCell *)cell).postImageView.image = image;
-                ((PostCell *)cell).activityIndicator.hidden = YES;
-                [((PostCell *)cell).activityIndicator stopAnimating];
+                postCell.postImageView.image = image;
+                postCell.activityIndicator.hidden = YES;
+                [postCell.activityIndicator stopAnimating];
             });
         });
     }
@@ -48,18 +71,21 @@
 - (UIImage *)scaleImage:(UIImage *)image {
     CGFloat imageWidth = image.size.width;
     CGFloat imageHeight = image.size.height;
-
-    if (imageWidth >= imageHeight) {
-        CGFloat coef = imageWidth / 512;
-        imageWidth = 512;
-        imageHeight = imageHeight / coef;
+    CGFloat maxSize = 1080;
+    
+    if (imageWidth > maxSize && imageHeight > maxSize) {
+        if (imageWidth >= imageHeight) {
+            CGFloat coef = imageWidth / maxSize;
+            imageWidth = maxSize;
+            imageHeight = imageHeight / coef;
+        }
+        else {
+            CGFloat coef = imageHeight / maxSize;
+            imageHeight = maxSize;
+            imageWidth = imageWidth / coef;
+        }
     }
-    else {
-        CGFloat coef = imageHeight / 512;
-        imageHeight = 512;
-        imageWidth = imageWidth / coef;
-    }
-
+    
     CGSize newSize = CGSizeMake(imageWidth, imageHeight);
     UIGraphicsBeginImageContext(newSize);
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
@@ -129,6 +155,31 @@
     CGContextRelease(ctx);
     CGImageRelease(cgimg);
     return img;
+}
+
+-(void)saveImageToUserDefaults:(UIImage *)image withKey:(NSString *)key {
+    if (image) {
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:IMAGES_KEY];
+        NSMutableDictionary *images = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
+        if (!images) {
+            images = [NSMutableDictionary new];
+        }
+        if (![images objectForKey:key]) {
+            [images setObject:image forKey:key];
+            data = [NSKeyedArchiver archivedDataWithRootObject:images];
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:IMAGES_KEY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
+}
+
+-(UIImage *)getImageFromUserDefaults:(NSString *)key {
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:IMAGES_KEY];
+    NSMutableDictionary *images = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
+    if (images) {
+        return [images valueForKey:key];
+    }
+    return nil;
 }
 
 @end
