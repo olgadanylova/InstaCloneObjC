@@ -29,7 +29,7 @@
     } error:^(Fault *fault) {
         
     }];
-        
+    
     return cell;
 }
 

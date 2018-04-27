@@ -18,6 +18,4 @@
 @property (nonatomic) BOOL liked;
 @property (nonatomic) NSInteger likesCount;
 
-- (IBAction)pressedLikes:(id)sender;
-
 @end

@@ -65,16 +65,12 @@
                                                         <constraint firstAttribute="width" constant="25" id="kNl-ML-jMw"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaj-xI-QJq">
-                                                    <rect key="frame" x="8" y="482" width="38" height="35"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                    <state key="normal" title="Likes">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaj-xI-QJq">
+                                                    <rect key="frame" x="8" y="482" width="30" height="35"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal">
                                                         <color key="titleColor" red="0.20392156859999999" green="0.28627450980000002" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="pressedLikes:" destination="jGc-Fo-MMv" eventType="touchUpInside" id="bk5-xT-JLU"/>
-                                                        <segue destination="xBG-ki-skc" kind="show" identifier="ShowLikes" id="Sgy-2U-GoN"/>
-                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Caption" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RW1-jo-Vtn">
                                                     <rect key="frame" x="8" y="517" width="53.5" height="18"/>
@@ -149,11 +145,17 @@
                                 <action selector="pressedLogout:" destination="oCz-LK-P5G" id="sdw-Oo-3NF"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="n4P-Lf-gKX">
+                            <connections>
+                                <action selector="pressedRefresh:" destination="oCz-LK-P5G" id="RMZ-dv-hI7"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="DKU-uj-1BC" id="fqy-Qw-osg"/>
                         <segue destination="UBX-BK-zm0" kind="show" identifier="ShowComments" id="8ZI-55-Vao"/>
                         <segue destination="ixB-e0-UFI" kind="unwind" identifier="unwindToSignIn" unwindAction="unwindToSignIn:" id="QP7-rF-Z6y"/>
+                        <segue destination="xBG-ki-skc" kind="show" identifier="ShowLikes" id="mBN-PF-vLp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="28o-Ct-t7x" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -216,9 +218,6 @@
                             <outlet property="delegate" destination="xBG-ki-skc" id="1dz-Nz-VBY"/>
                         </connections>
                     </tableView>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
-                    </userDefinedRuntimeAttributes>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gKG-5T-liG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

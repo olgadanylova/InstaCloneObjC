@@ -43,7 +43,8 @@
     }];
 }
 
-- (IBAction)pressedLikesButton:(id)sender {
+- (IBAction)pressedRefresh:(id)sender {
+    [self loadPosts];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -59,25 +60,51 @@
         cell.nameLabel.text = [self getUserName:post];
         [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
         cell.captionLabel.text = post.caption;
-        if (post.likes) {
-            cell.likesCount = [post.likes count];
-            NSString *predString = [NSString stringWithFormat:@"ownerId = '%@'", backendless.userService.currentUser.objectId];
-            NSPredicate *pred = [NSPredicate predicateWithFormat:predString];
-            if ([[post.likes filteredArrayUsingPredicate:pred] count] > 0) {
-                cell.liked = YES;
-                cell.likeImageView.image = [UIImage imageNamed:@"likeSelected"];
-            }
-            NSString *likesTitle = [NSString stringWithFormat:@"%lu Likes", cell.likesCount];
-            [cell.likeCountButton setTitle:likesTitle forState:UIControlStateNormal];
+        
+        // если среди post.likes есть like.ownerId = currentUser.objectId, то liked = yes;
+        NSArray *likes = post.likes;
+        NSString *predString = [NSString stringWithFormat:@"ownerId = '%@'", backendless.userService.currentUser.objectId];
+        NSPredicate *pred = [NSPredicate predicateWithFormat:predString];
+        if ([likes filteredArrayUsingPredicate:pred].firstObject) {
+            cell.liked = YES;
+            cell.likeImageView.image = [UIImage imageNamed:@"likeSelected.png"];
         }
         else {
-            [cell.likeCountButton setTitle:@"0 Likes" forState:UIControlStateNormal];
+            cell.liked = NO;
+            cell.likeImageView.image = [UIImage imageNamed:@"like.png"];
         }
+        [UIView setAnimationsEnabled:NO];
+        [cell.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", [post.likes count]] forState:UIControlStateNormal];
+        [UIView setAnimationsEnabled:YES];
+        [cell.likeCountButton addTarget:self action:@selector(likesButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
     }];
     
     return cell;
+}
+
+-(void)likesButtonTapped:(UIButton *)sender {
+    [self performSegueWithIdentifier:@"ShowLikes" sender:sender];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ShowLikes"]) {
+        PostCell *cell = (PostCell *)[[sender superview] superview];
+        NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
+        
+        [self loadPosts];
+        NSString *currentPost = [posts objectAtIndex:indexPath.row].objectId;
+        [[backendless.data of:[Post class]] findById:currentPost response:^(Post *post) {
+            LikesViewController *likesVC = (LikesViewController *)[segue destinationViewController];
+            likesVC.post = post;
+            [likesVC.tableView reloadData];
+        } error:^(Fault *fault) {
+            
+        }];
+        
+    }
 }
 
 - (NSString *)getUserName:(Post *)post {
@@ -86,15 +113,6 @@
         return user.name;
     }
     return @"";
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ShowLikes"]) {
-        PostCell *cell = (PostCell *)[sender superview];
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        LikesViewController *likesVC = [segue destinationViewController];       
-        likesVC.post = [posts objectAtIndex:indexPath.row];
-    }
 }
 
 @end
