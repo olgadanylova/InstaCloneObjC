@@ -18,6 +18,9 @@
 		5A3DFDD1208F63C20071544C /* ColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3DFDD0208F63C20071544C /* ColorHelper.m */; };
 		5A9F93942091C095001507DD /* backendless.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A9F92A52091C095001507DD /* backendless.a */; };
 		5ADC1914208F89D600583E5B /* PictureHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC1913208F89D600583E5B /* PictureHelper.m */; };
+		5E19A14920975FB60083D789 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E19A14820975FB60083D789 /* ProfileViewController.m */; };
+		5E19A14C2097647C0083D789 /* ProfileHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E19A14B2097647C0083D789 /* ProfileHeaderCollectionReusableView.m */; };
+		5E19A14F209764EF0083D789 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E19A14E209764EF0083D789 /* PhotoCollectionViewCell.m */; };
 		5E1BF5FC208E03AB00FF92E6 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF5FB208E03AB00FF92E6 /* Post.m */; };
 		5E1BF5FF208E03C200FF92E6 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF5FE208E03C200FF92E6 /* Comment.m */; };
 		5E1BF605208E20A600FF92E6 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF604208E20A600FF92E6 /* HomeViewController.m */; };
@@ -292,6 +295,12 @@
 		5A9F93932091C095001507DD /* ConcreteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConcreteObject.h; sourceTree = "<group>"; };
 		5ADC1912208F89D600583E5B /* PictureHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PictureHelper.h; sourceTree = "<group>"; };
 		5ADC1913208F89D600583E5B /* PictureHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PictureHelper.m; sourceTree = "<group>"; };
+		5E19A14720975FB60083D789 /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		5E19A14820975FB60083D789 /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		5E19A14A2097647C0083D789 /* ProfileHeaderCollectionReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileHeaderCollectionReusableView.h; sourceTree = "<group>"; };
+		5E19A14B2097647C0083D789 /* ProfileHeaderCollectionReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileHeaderCollectionReusableView.m; sourceTree = "<group>"; };
+		5E19A14D209764EF0083D789 /* PhotoCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionViewCell.h; sourceTree = "<group>"; };
+		5E19A14E209764EF0083D789 /* PhotoCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		5E1BF5FA208E03AB00FF92E6 /* Post.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		5E1BF5FB208E03AB00FF92E6 /* Post.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		5E1BF5FD208E03C200FF92E6 /* Comment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
@@ -699,6 +708,12 @@
 				5A2F8D852092062B00E51D5C /* LikesViewController.m */,
 				5E69E32A20970D1E0037CEE9 /* CommentsViewController.h */,
 				5E69E32B20970D1E0037CEE9 /* CommentsViewController.m */,
+				5E19A14720975FB60083D789 /* ProfileViewController.h */,
+				5E19A14820975FB60083D789 /* ProfileViewController.m */,
+				5E19A14A2097647C0083D789 /* ProfileHeaderCollectionReusableView.h */,
+				5E19A14B2097647C0083D789 /* ProfileHeaderCollectionReusableView.m */,
+				5E19A14D209764EF0083D789 /* PhotoCollectionViewCell.h */,
+				5E19A14E209764EF0083D789 /* PhotoCollectionViewCell.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -788,11 +803,14 @@
 				5A3DFDCD208F47150071544C /* CameraViewController.m in Sources */,
 				5E69E32C20970D1E0037CEE9 /* CommentsViewController.m in Sources */,
 				5A3DFDD1208F63C20071544C /* ColorHelper.m in Sources */,
+				5E19A14920975FB60083D789 /* ProfileViewController.m in Sources */,
 				5A2F8D862092062B00E51D5C /* LikesViewController.m in Sources */,
 				5ADC1914208F89D600583E5B /* PictureHelper.m in Sources */,
+				5E19A14F209764EF0083D789 /* PhotoCollectionViewCell.m in Sources */,
 				5E1BF605208E20A600FF92E6 /* HomeViewController.m in Sources */,
 				5E1BF5FC208E03AB00FF92E6 /* Post.m in Sources */,
 				0F7A63311E769BB6007B6B07 /* main.m in Sources */,
+				5E19A14C2097647C0083D789 /* ProfileHeaderCollectionReusableView.m in Sources */,
 				5E69E32F20970E050037CEE9 /* CommentCell.m in Sources */,
 				5A2F8D8920920B3E00E51D5C /* LikeCell.m in Sources */,
 			);

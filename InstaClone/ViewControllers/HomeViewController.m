@@ -38,18 +38,6 @@
     }];
 }
 
-- (IBAction)pressedLogout:(id)sender {
-    [backendless.userService logout:^{
-        [self performSegueWithIdentifier:@"unwindToSignIn" sender:nil];
-    } error:^(Fault *fault) {
-        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
-    }];
-}
-
-- (IBAction)pressedRefresh:(id)sender {
-    [self loadPosts];
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [posts count];
 }
@@ -75,7 +63,7 @@
             cell.likeImageView.image = [UIImage imageNamed:@"like.png"];
         }
         [UIView setAnimationsEnabled:NO];
-        [cell.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", [post.likes count]] forState:UIControlStateNormal];
+        [cell.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", (unsigned long)[post.likes count]] forState:UIControlStateNormal];
         [UIView setAnimationsEnabled:YES];
         [cell.likeCountButton addTarget:self action:@selector(likesButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         UITapGestureRecognizer *commentTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleCommentTap:)];
@@ -87,12 +75,20 @@
     return cell;
 }
 
-- (IBAction)handleCommentTap:(id)sender {
-    [self performSegueWithIdentifier:@"ShowComments" sender:nil];
+- (NSString *)getUserName:(Post *)post {
+    if (post.ownerId) {
+        BackendlessUser *user = [backendless.userService findById:post.ownerId];
+        return user.name;
+    }
+    return @"";
 }
 
 - (void)likesButtonTapped:(UIButton *)sender {
     [self performSegueWithIdentifier:@"ShowLikes" sender:sender];
+}
+
+- (IBAction)handleCommentTap:(id)sender {
+    [self performSegueWithIdentifier:@"ShowComments" sender:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -117,12 +113,16 @@
     }
 }
 
-- (NSString *)getUserName:(Post *)post {
-    if (post.ownerId) {
-        BackendlessUser *user = [backendless.userService findById:post.ownerId];
-        return user.name;
-    }
-    return @"";
+- (IBAction)pressedLogout:(id)sender {
+    [backendless.userService logout:^{
+        [self performSegueWithIdentifier:@"unwindToSignIn" sender:nil];
+    } error:^(Fault *fault) {
+        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+    }];
+}
+
+- (IBAction)pressedRefresh:(id)sender {
+    [self loadPosts];
 }
 
 @end

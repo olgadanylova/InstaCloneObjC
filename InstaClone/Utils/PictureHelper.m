@@ -3,6 +3,7 @@
 #import "PostCell.h"
 #import "LikeCell.h"
 #import "CommentCell.h"
+#import "ProfileHeaderCollectionReusableView.h"
 
 #define IMAGES_KEY @"instaCloneImages"
 
@@ -39,6 +40,24 @@
                 }
             });
         });
+}
+
+- (void)setProfilePicture:(NSString *)profilePicture forHeader:(UICollectionReusableView *)header {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *image;
+        if ([self getImageFromUserDefaults:profilePicture]) {
+            image = [self getImageFromUserDefaults:profilePicture];
+        }
+        else {
+            image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:profilePicture]]];
+            [self saveImageToUserDefaults:image withKey:profilePicture];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([header isKindOfClass:[ProfileHeaderCollectionReusableView class]]) {
+                ((ProfileHeaderCollectionReusableView *)header).profileImageView.image = image;
+            }
+        });
+    });
 }
 
 - (void)setPostPhoto:(NSString *)photo forCell:(UITableViewCell *)cell {
