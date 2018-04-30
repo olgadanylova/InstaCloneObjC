@@ -57,11 +57,9 @@
     [target presentViewController:alert animated:YES completion:nil];
 }
 
--(void)showSegueAlert:(NSString *)title message:(NSString *)message segueIdentifier:(NSString *)segueIdentifier target:(UIViewController *)target {
+- (void)showSegueAlert:(NSString *)title message:(NSString *)message target:(UIViewController *)target action:(void (^)(UIAlertAction *))action {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *OK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        [target performSegueWithIdentifier:segueIdentifier sender:nil];
-    }];
+    UIAlertAction *OK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:action];
     [alert addAction:OK];
     [target presentViewController:alert animated:YES completion:nil];
 }

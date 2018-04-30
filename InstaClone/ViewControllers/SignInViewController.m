@@ -19,8 +19,7 @@
     self.emailField.delegate = self;
     self.passwordField.delegate = self;
     self.emailField.tag = 0;
-    self.passwordField.tag = 1;
-    
+    self.passwordField.tag = 1;    
     backendless.hostURL = HOST_URL;
     [backendless initApp:APP_ID APIKey:API_KEY];
     if (backendless.userService.isValidUserToken && backendless.userService.currentUser) {
@@ -71,7 +70,7 @@
     [self performSegueWithIdentifier:@"ShowSignUp" sender:nil];
 }
 
--(IBAction)unwindToSignIn:(UIStoryboardSegue *)segue {
+- (IBAction)unwindToSignIn:(UIStoryboardSegue *)segue {
 }
 
 @end

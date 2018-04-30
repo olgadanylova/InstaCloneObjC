@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "HomeViewController.h"
 #import "Post.h"
+#import "Backendless.h"
 
 @interface PostCell : UITableViewCell
 

@@ -8,6 +8,6 @@
 + (instancetype)sharedInstance;
 - (void)showErrorAlert:(NSString *)code title:(NSString *)title message:(NSString *)message target:(UIViewController *)target;
 - (void)showTakePhotoAlert:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate> *)target;
-- (void)showSegueAlert:(NSString *)title message:(NSString *)message segueIdentifier:(NSString *)segueIdentifier target:(UIViewController *)target;
+- (void)showSegueAlert:(NSString *)title message:(NSString *)message target:(UIViewController *)target action:(void(^)(UIAlertAction *))action;
 
 @end

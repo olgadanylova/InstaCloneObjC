@@ -6,7 +6,7 @@
 
 @interface ColorHelper : NSObject
 
-+(instancetype)sharedInstance;
--(UIColor *)getColorFromHex:(NSString *)hexColor withAlpha:(CGFloat)alpha;
++ (instancetype)sharedInstance;
+- (UIColor *)getColorFromHex:(NSString *)hexColor withAlpha:(CGFloat)alpha;
 
 @end

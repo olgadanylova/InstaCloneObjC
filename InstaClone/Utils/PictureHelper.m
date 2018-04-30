@@ -2,6 +2,7 @@
 #import "PictureHelper.h"
 #import "PostCell.h"
 #import "LikeCell.h"
+#import "CommentCell.h"
 
 #define IMAGES_KEY @"instaCloneImages"
 
@@ -32,7 +33,10 @@
                 }
                 else if ([cell isKindOfClass:[LikeCell class]]) {
                     ((LikeCell *)cell).profileImageView.image = image;
-                }                
+                }
+                else if ([cell isKindOfClass:[CommentCell class]]) {
+                    ((CommentCell *)cell).profileImageView.image = image;
+                }
             });
         });
 }
@@ -62,7 +66,7 @@
     }
 }
 
--(UIImage *)scaleAndRotateImage:(UIImage *)image {
+- (UIImage *)scaleAndRotateImage:(UIImage *)image {
     image = [self scaleImage:image];
     image = [self rotateImage:image];
     return image;
@@ -157,7 +161,7 @@
     return img;
 }
 
--(void)saveImageToUserDefaults:(UIImage *)image withKey:(NSString *)key {
+- (void)saveImageToUserDefaults:(UIImage *)image withKey:(NSString *)key {
     if (image) {
         NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:IMAGES_KEY];
         NSMutableDictionary *images = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
@@ -173,7 +177,7 @@
     }
 }
 
--(UIImage *)getImageFromUserDefaults:(NSString *)key {
+- (UIImage *)getImageFromUserDefaults:(NSString *)key {
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:IMAGES_KEY];
     NSMutableDictionary *images = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
     if (images) {

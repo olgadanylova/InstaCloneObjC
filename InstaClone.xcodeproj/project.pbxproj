@@ -22,6 +22,8 @@
 		5E1BF5FF208E03C200FF92E6 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF5FE208E03C200FF92E6 /* Comment.m */; };
 		5E1BF605208E20A600FF92E6 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF604208E20A600FF92E6 /* HomeViewController.m */; };
 		5E1BF609208E2D1500FF92E6 /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BF608208E2D1500FF92E6 /* PostCell.m */; };
+		5E69E32C20970D1E0037CEE9 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E69E32B20970D1E0037CEE9 /* CommentsViewController.m */; };
+		5E69E32F20970E050037CEE9 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E69E32E20970E050037CEE9 /* CommentCell.m */; };
 		5EB7BAE72089DC540073FC64 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EB7BAE22089DC540073FC64 /* Camera.storyboard */; };
 		5EB7BAE82089DC540073FC64 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EB7BAE32089DC540073FC64 /* Home.storyboard */; };
 		5EB7BAE92089DC540073FC64 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EB7BAE42089DC540073FC64 /* Profile.storyboard */; };
@@ -298,6 +300,10 @@
 		5E1BF604208E20A600FF92E6 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		5E1BF607208E2D1500FF92E6 /* PostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
 		5E1BF608208E2D1500FF92E6 /* PostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
+		5E69E32A20970D1E0037CEE9 /* CommentsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
+		5E69E32B20970D1E0037CEE9 /* CommentsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
+		5E69E32D20970E050037CEE9 /* CommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		5E69E32E20970E050037CEE9 /* CommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
 		5EB7BAE22089DC540073FC64 /* Camera.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		5EB7BAE32089DC540073FC64 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		5EB7BAE42089DC540073FC64 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
@@ -658,6 +664,8 @@
 				5E1BF608208E2D1500FF92E6 /* PostCell.m */,
 				5A2F8D8720920B3E00E51D5C /* LikeCell.h */,
 				5A2F8D8820920B3E00E51D5C /* LikeCell.m */,
+				5E69E32D20970E050037CEE9 /* CommentCell.h */,
+				5E69E32E20970E050037CEE9 /* CommentCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -689,6 +697,8 @@
 				5A3DFDCC208F47150071544C /* CameraViewController.m */,
 				5A2F8D842092062B00E51D5C /* LikesViewController.h */,
 				5A2F8D852092062B00E51D5C /* LikesViewController.m */,
+				5E69E32A20970D1E0037CEE9 /* CommentsViewController.h */,
+				5E69E32B20970D1E0037CEE9 /* CommentsViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -776,12 +786,14 @@
 				0F7A63341E769BB6007B6B07 /* AppDelegate.m in Sources */,
 				5EF66A3C208A347A00D33BFD /* SignUpViewController.m in Sources */,
 				5A3DFDCD208F47150071544C /* CameraViewController.m in Sources */,
+				5E69E32C20970D1E0037CEE9 /* CommentsViewController.m in Sources */,
 				5A3DFDD1208F63C20071544C /* ColorHelper.m in Sources */,
 				5A2F8D862092062B00E51D5C /* LikesViewController.m in Sources */,
 				5ADC1914208F89D600583E5B /* PictureHelper.m in Sources */,
 				5E1BF605208E20A600FF92E6 /* HomeViewController.m in Sources */,
 				5E1BF5FC208E03AB00FF92E6 /* Post.m in Sources */,
 				0F7A63311E769BB6007B6B07 /* main.m in Sources */,
+				5E69E32F20970E050037CEE9 /* CommentCell.m in Sources */,
 				5A2F8D8920920B3E00E51D5C /* LikeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

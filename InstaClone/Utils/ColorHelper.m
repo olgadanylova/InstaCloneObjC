@@ -3,7 +3,7 @@
 
 @implementation ColorHelper
 
-+(instancetype)sharedInstance {
++ (instancetype)sharedInstance {
     static ColorHelper *sharedHelper;
     @synchronized(self) {
         if (!sharedHelper)
@@ -12,7 +12,7 @@
     return sharedHelper;
 }
 
--(UIColor *)getColorFromHex:(NSString *)hexColor withAlpha:(CGFloat)alpha {
+- (UIColor *)getColorFromHex:(NSString *)hexColor withAlpha:(CGFloat)alpha {
     unsigned rgbValue = 0;
     NSScanner *scanner = [NSScanner scannerWithString:hexColor];
     [scanner setScanLocation:1]; // bypass '#' character

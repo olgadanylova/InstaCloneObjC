@@ -15,7 +15,6 @@
     self.userNameField.tag = 0;
     self.emailField.tag = 1;
     self.passwordField.tag = 2;
-    
     CGFloat side = self.profileImageView.frame.size.width / 2;
     self.profileImageView.frame = CGRectMake(0, 0, side, side);
     self.profileImageView.layer.cornerRadius = side;
@@ -62,7 +61,7 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
--(void)stopActivityIndicator {
+- (void)stopActivityIndicator {
     [self.activityIndicator stopAnimating];
     self.activityIndicator.hidden = YES;
 }
@@ -75,8 +74,8 @@
         BackendlessUser *newUser = [BackendlessUser new];
         newUser.name = self.userNameField.text;
         newUser.email = self.emailField.text;
-        newUser.password = self.passwordField.text;
-        if (self.profileImageView.image != [UIImage imageNamed:@"camera.png"]) {
+        newUser.password = self.passwordField.text;        
+        if (![[self.profileImageView.image.imageAsset valueForKey:@"assetName"] isEqualToString:@"camera"]) {
             NSString *profileImageFileName = [NSString stringWithFormat:@"/InstaCloneProfilePictures/%@.png", [[NSUUID UUID] UUIDString]];
             UIImage *image = [pictureHelper scaleAndRotateImage:self.profileImageView.image];
             NSData *data = UIImagePNGRepresentation(image);
@@ -85,7 +84,9 @@
                 [newUser setProperty:@"profilePicture" object:profilePicture.fileURL];
                 [backendless.userService registerUser:newUser response:^(BackendlessUser *user) {
                     [self stopActivityIndicator];
-                    [alertViewController showSegueAlert:@"Registration complete" message:@"Please login to continue" segueIdentifier:@"unwindToSignInVC" target:self];
+                    [alertViewController showSegueAlert:@"Registration complete" message:@"Please login to continue" target:self action:^(UIAlertAction *action) {
+                        [self performSegueWithIdentifier:@"unwindToSignInVC" sender:nil];
+                    }];
                 } error:^(Fault *fault) {
                     [self stopActivityIndicator];
                     [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
@@ -96,10 +97,13 @@
             }];
         }
         else {
-            [newUser setProperty:@"profilePicture" object:@"InstaCloneProfilePictures/defaultProfilePicture.png"];
+            NSString *defaultProfilePictureUrl = [NSString stringWithFormat:@"https://api.backendless.com/%@/%@/files/InstaCloneProfilePictures/defaultProfilePicture.png", backendless.appID, backendless.apiKey];
+            [newUser setProperty:@"profilePicture" object:defaultProfilePictureUrl];
             [backendless.userService registerUser:newUser response:^(BackendlessUser *user) {
                 [self stopActivityIndicator];
-                [alertViewController showSegueAlert:@"Registration complete" message:@"Please login to continue" segueIdentifier:@"unwindToSignInVC" target:self];
+                [alertViewController showSegueAlert:@"Registration complete" message:@"Please login to continue" target:self action:^(UIAlertAction *action) {
+                    [self performSegueWithIdentifier:@"unwindToSignInVC" sender:nil];
+                }];
             } error:^(Fault *fault) {
                 [self stopActivityIndicator];
                 [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];

@@ -17,10 +17,6 @@
     [self setDefaultView];
     self.captionTextView.delegate = self;
     self.captionTextView.tag = 0;
-    
-    // change activity indicator size
-    CGFloat side = self.view.frame.size.width / 10;
-    self.activityIndicator.frame = CGRectMake(0, 0, side, side);
 }
 
 - (void)setDefaultView {
@@ -42,8 +38,7 @@
     self.captionTextView.hidden = NO;
     self.clearButton.enabled = YES;
     [self.clearButton setTintColor:[colorHelper getColorFromHex:@"2C3E50" withAlpha:1]];
-    [self.shareButton setTitle:SHARE forState:UIControlStateNormal];
-    
+    [self.shareButton setTitle:SHARE forState:UIControlStateNormal];    
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage] && picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         UIImage *imageTaken = [info valueForKey:UIImagePickerControllerOriginalImage];
