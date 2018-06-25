@@ -62,8 +62,10 @@
 }
 
 - (void)stopActivityIndicator {
-    [self.activityIndicator stopAnimating];
-    self.activityIndicator.hidden = YES;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.activityIndicator stopAnimating];
+        self.activityIndicator.hidden = YES;
+    });    
 }
 
 - (IBAction)pressedSignUp:(id)sender {
@@ -80,7 +82,7 @@
             UIImage *image = [pictureHelper scaleAndRotateImage:self.profileImageView.image];
             NSData *data = UIImagePNGRepresentation(image);
             [pictureHelper saveImageToUserDefaults:image withKey:profileImageFileName];
-            [backendless.file saveFile:profileImageFileName content:data response:^(BackendlessFile *profilePicture) {
+            [backendless.file uploadFile:profileImageFileName content:data response:^(BackendlessFile *profilePicture) {
                 [newUser setProperty:@"profilePicture" object:profilePicture.fileURL];
                 [backendless.userService registerUser:newUser response:^(BackendlessUser *user) {
                     [self stopActivityIndicator];
@@ -112,6 +114,7 @@
     }
     else {
         [alertViewController showErrorAlert:nil title:@"Invalid user name, email or password" message:@"Please make sure you've entered your name, email and password correctly" target:self];
+        [self stopActivityIndicator];
     }
 }
 

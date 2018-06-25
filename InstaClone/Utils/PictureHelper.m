@@ -63,10 +63,12 @@
 - (void)setPostPhoto:(NSString *)photo forCell:(UITableViewCell *)cell {
     if ([cell isKindOfClass:[PostCell class]]) {
         PostCell *postCell = (PostCell *)cell;
-        if (!postCell.postImageView.image) {
-            postCell.activityIndicator.hidden = NO;
-            [postCell.activityIndicator startAnimating];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            if (!postCell.postImageView.image) {
+                postCell.activityIndicator.hidden = NO;
+                [postCell.activityIndicator startAnimating];
+            }
+        });       
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             UIImage *image;
             if ([self getImageFromUserDefaults:photo]) {

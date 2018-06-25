@@ -27,12 +27,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadPosts];
+    self.navigationController.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)loadPosts {
     [postStore find:^(NSArray *postsFound) {
-        self->posts = [NSArray arrayWithArray:postsFound];
-        [self.tableView reloadData];
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
+        self->posts = [postsFound sortedArrayUsingDescriptors:@[sortDescriptor]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
     }];
@@ -45,72 +49,76 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"HomeCell" forIndexPath:indexPath];
     Post *post = [posts objectAtIndex:indexPath.row];
+    cell.post = post;
+    
     [backendless.userService findById:post.ownerId response:^(BackendlessUser *user) {
-        cell.post = post;
-        [pictureHelper setPostPhoto:post.photo forCell:cell];
-        cell.nameLabel.text = [self getUserName:post];
         [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
-        cell.captionLabel.text = post.caption;
-        NSArray *likes = post.likes;
-        NSString *predString = [NSString stringWithFormat:@"ownerId = '%@'", backendless.userService.currentUser.objectId];
-        NSPredicate *pred = [NSPredicate predicateWithFormat:predString];
-        if ([likes filteredArrayUsingPredicate:pred].firstObject) {
-            cell.liked = YES;
-            cell.likeImageView.image = [UIImage imageNamed:@"likeSelected.png"];
-        }
-        else {
-            cell.liked = NO;
-            cell.likeImageView.image = [UIImage imageNamed:@"like.png"];
-        }
-        [UIView setAnimationsEnabled:NO];
-        [cell.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", (unsigned long)[post.likes count]] forState:UIControlStateNormal];
-        [UIView setAnimationsEnabled:YES];
-        [cell.likeCountButton addTarget:self action:@selector(likesButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        UITapGestureRecognizer *commentTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleCommentTap:)];
-        [cell.commentImageView addGestureRecognizer:commentTapGesture];
-        cell.commentImageView.userInteractionEnabled = YES;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.nameLabel.text = user.name;
+        });        
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
-    }];    
-    return cell;
-}
-
-- (NSString *)getUserName:(Post *)post {
-    if (post.ownerId) {
-        BackendlessUser *user = [backendless.userService findById:post.ownerId];
-        return user.name;
+    }];
+    
+    [pictureHelper setPostPhoto:post.photo forCell:cell];
+    
+    [UIView setAnimationsEnabled:NO];
+    [cell.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", (unsigned long)[post.likes count]] forState:UIControlStateNormal];
+    [UIView setAnimationsEnabled:YES];
+    [cell.likeCountButton addTarget:self action:@selector(likesButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.commentsButton addTarget:self action:@selector(commentsButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    formatter.dateFormat = @"HH:mm yyyy/MM/dd";
+    cell.dateLabel.text = [formatter stringFromDate:post.created];
+    
+    NSArray *likes = post.likes;
+    NSString *predicateString = [NSString stringWithFormat:@"ownerId = '%@'", backendless.userService.currentUser.objectId];
+    if ([likes filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:predicateString]].firstObject) {
+        cell.liked = YES;
+        cell.likeImageView.image = [UIImage imageNamed:@"likeSelected.png"];
     }
-    return @"";
+    else {
+        cell.liked = NO;
+        cell.likeImageView.image = [UIImage imageNamed:@"like.png"];
+    }
+    
+    cell.captionLabel.text = post.caption;
+    return cell;
 }
 
 - (void)likesButtonTapped:(UIButton *)sender {
     [self performSegueWithIdentifier:@"ShowLikes" sender:sender];
 }
 
-- (IBAction)handleCommentTap:(id)sender {
-    [self performSegueWithIdentifier:@"ShowComments" sender:nil];
+- (void)commentsButtonTapped:(UIButton *)sender {
+    [self performSegueWithIdentifier:@"ShowComments" sender:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     PostCell *cell = (PostCell *)[[sender superview] superview];
-    NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
-    [self loadPosts];
-    if ([segue.identifier isEqualToString:@"ShowLikes"]) {
-        NSString *currentPost = [posts objectAtIndex:indexPath.row].objectId;
-        [postStore findById:currentPost response:^(Post *post) {
-            LikesViewController *likesVC = (LikesViewController *)[segue destinationViewController];
-            likesVC.post = post;
-            [likesVC.tableView reloadData];
-        } error:^(Fault *fault) {
-            [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
-        }];
-    }
-    else if ([segue.identifier isEqualToString:@"ShowComments"]) {
-        Post *currentPost = [posts objectAtIndex:indexPath.row];
-        CommentsViewController *commentsVC = [segue destinationViewController];
-        commentsVC.post = currentPost;
-        [commentsVC.tableView reloadData];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
+        [self loadPosts];
+        if ([segue.identifier isEqualToString:@"ShowLikes"]) {
+            NSString *currentPost = [self->posts objectAtIndex:indexPath.row].objectId;
+            [self->postStore findById:currentPost response:^(Post *post) {
+                LikesViewController *likesVC = (LikesViewController *)[segue destinationViewController];
+                likesVC.post = post;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [likesVC.tableView reloadData];
+                });
+            } error:^(Fault *fault) {
+                [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+            }];
+        }
+        else if ([segue.identifier isEqualToString:@"ShowComments"]) {
+            Post *currentPost = [self->posts objectAtIndex:indexPath.row];
+            CommentsViewController *commentsVC = [segue destinationViewController];
+            commentsVC.post = currentPost;
+            [commentsVC.tableView reloadData];
+        }
+    });
 }
 
 - (IBAction)pressedLogout:(id)sender {

@@ -40,7 +40,10 @@
                                                    response:^(NSNumber *relationSet) {
                                                        [weakPostStore findById:weakSelf.post.objectId response:^(Post *post) {
                                                            [UIView setAnimationsEnabled:NO];
-                                                           [weakSelf.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", [post.likes count]] forState:UIControlStateNormal];
+                                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                                                [weakSelf.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", [post.likes count]] forState:UIControlStateNormal];
+                                                           });
+                                                          
                                                            [UIView setAnimationsEnabled:YES];
                                                        } error:^(Fault *fault) {
                                                        }];
@@ -58,7 +61,9 @@
             [self->likeStore remove:like response:^(NSNumber *removed) {
                 [self->postStore findById:self.post.objectId response:^(Post *post) {
                     [UIView setAnimationsEnabled:NO];
-                    [self.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", [post.likes count]] forState:UIControlStateNormal];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                         [self.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", [post.likes count]] forState:UIControlStateNormal];
+                    });                   
                     [UIView setAnimationsEnabled:YES];
                 } error:^(Fault *fault) {
                 }];    

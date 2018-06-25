@@ -28,7 +28,9 @@
         self->posts = userPosts;
         [[backendless.data of:[BackendlessUser class]] getObjectCount:^(NSNumber *usersCount) {
             self->totalUsersCount = [usersCount integerValue];
-            [self.collectionView reloadData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.collectionView reloadData];
+            });            
         } error:^(Fault *fault) {
             [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
         }];

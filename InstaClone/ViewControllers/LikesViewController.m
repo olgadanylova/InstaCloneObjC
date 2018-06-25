@@ -20,7 +20,9 @@
     LikeCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"LikeCell" forIndexPath:indexPath];
     Likee *like = [self.post.likes objectAtIndex:indexPath.row];
     [backendless.userService findById:like.ownerId response:^(BackendlessUser *user) {
-        cell.nameLabel.text = user.name;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.nameLabel.text = user.name;
+        });
         [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];

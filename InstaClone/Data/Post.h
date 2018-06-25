@@ -9,6 +9,7 @@
 @property (strong, nonatomic) NSString *caption;
 @property (strong, nonatomic) NSArray<Likee *> *likes;
 @property (strong, nonatomic) NSArray<Comment *> *comments;
+@property (strong, nonatomic) NSDate *created;
 @property (strong, nonatomic) NSString *objectId;
 @property (strong, nonatomic) NSString *ownerId;
 

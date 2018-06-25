@@ -67,13 +67,23 @@
     return [self.post.comments count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 85;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"CommentCell" forIndexPath:indexPath];
-    Comment *comment = [self.post.comments objectAtIndex:indexPath.row];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"created" ascending:YES];
+    Comment *comment = [[self.post.comments sortedArrayUsingDescriptors:@[sortDescriptor]] objectAtIndex:indexPath.row];
     [backendless.userService findById:comment.ownerId response:^(BackendlessUser *user) {
-        cell.nameLabel.text = user.name;
-        [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
-        cell.commentLabel.text = comment.text;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
+            cell.nameLabel.text = user.name;
+            cell.commentLabel.text = comment.text;            
+            NSDateFormatter *formatter = [NSDateFormatter new];
+            formatter.dateFormat = @"HH:mm yyyy/MM/dd";
+            cell.dateLabel.text = [formatter stringFromDate:comment.created];
+        });
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
     }];
@@ -104,7 +114,9 @@
 - (void)reloadTableData {
     [postStore findById:self.post.objectId response:^(Post *post) {
         self.post = post;
-        [self.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
     }];
@@ -116,15 +128,18 @@
     newComment.text = self.commentTextField.text;
     [commentStore save:newComment response:^(Comment *comment) {
         [self->postStore addRelation:@"comments:Comment:n"
-                parentObjectId:self.post.objectId
-                  childObjects:@[comment.objectId]
-                      response:^(NSNumber *relationSet) {
-            weakSelf.commentTextField.text = @"";
-            [weakSelf.sendButton setEnabled:NO];
-            [weakSelf reloadTableData];
-        } error:^(Fault *fault) {
-            [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:weakSelf];
-        }];
+                      parentObjectId:self.post.objectId
+                        childObjects:@[comment.objectId]
+                            response:^(NSNumber *relationSet) {
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    weakSelf.commentTextField.text = @"";
+                                    [weakSelf.sendButton setEnabled:NO];
+                                    [weakSelf.view endEditing:YES];
+                                    [weakSelf reloadTableData];
+                                });
+                            } error:^(Fault *fault) {
+                                [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:weakSelf];
+                            }];
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
     }];
