@@ -94,27 +94,28 @@
             UIImage *image = [pictureHelper scaleAndRotateImage:self.profileImageView.image];
             NSData *data = UIImagePNGRepresentation(image);
             [pictureHelper saveImageToUserDefaults:image withKey:profileImageFileName];
-            
+
             [backendless.file uploadFile:profileImageFileName content:data response:^(BackendlessFile *profilePicture) {
-                
                 [self->currentUser setProperty:@"profilePicture" object:profilePicture.fileURL];
                 [[backendless.data of:[BackendlessUser class]] save:self->currentUser response:^(BackendlessUser *updatedUser) {
-                    
+                    [alertViewController]
                 } error:^(Fault *fault) {
                     [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
                 }];
-                
+
             } error:^(Fault *fault) {
                 [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
             }];
-            
-            
-            
-            
+
         } error:^(Fault *fault) {
             [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
         }];
     }
+    
+    [[backendless.data of:[BackendlessUser class]] save:self->currentUser response:^(BackendlessUser *updatedUser) {
+    } error:^(Fault *fault) {
+        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+    }];
 }
 
 @end
