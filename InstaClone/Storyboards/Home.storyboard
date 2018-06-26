@@ -190,10 +190,10 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="ZIn-V9-w9f">
-                                            <rect key="frame" x="8" y="10" width="50" height="50"/>
+                                            <rect key="frame" x="16" y="9" width="50" height="50"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="3dw-wU-CJJ"/>
-                                                <constraint firstAttribute="width" constant="50" id="68A-rv-HX6"/>
+                                                <constraint firstAttribute="width" constant="50" id="FgB-qS-Fax"/>
+                                                <constraint firstAttribute="width" secondItem="ZIn-V9-w9f" secondAttribute="height" multiplier="1:1" id="bRG-yy-QaE"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -201,24 +201,22 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rHS-zi-pKI">
-                                            <rect key="frame" x="66" y="35" width="301" height="0.0"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACx-TR-WDZ">
+                                            <rect key="frame" x="74" y="24" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="rHS-zi-pKI" firstAttribute="leading" secondItem="ZIn-V9-w9f" secondAttribute="trailing" constant="8" id="Bjp-IZ-L5z"/>
-                                        <constraint firstAttribute="trailing" secondItem="rHS-zi-pKI" secondAttribute="trailing" constant="8" id="Vg5-eb-Y2u"/>
-                                        <constraint firstItem="ZIn-V9-w9f" firstAttribute="leading" secondItem="qc5-nF-Rei" secondAttribute="leading" constant="8" id="WRc-3w-zMu"/>
-                                        <constraint firstItem="ZIn-V9-w9f" firstAttribute="top" secondItem="qc5-nF-Rei" secondAttribute="top" constant="10" id="Yki-wi-mPa"/>
-                                        <constraint firstAttribute="bottom" secondItem="ZIn-V9-w9f" secondAttribute="bottom" constant="10" id="ink-Jr-pqe"/>
-                                        <constraint firstItem="rHS-zi-pKI" firstAttribute="centerY" secondItem="ZIn-V9-w9f" secondAttribute="centerY" id="mX5-pY-DOZ"/>
+                                        <constraint firstItem="ZIn-V9-w9f" firstAttribute="centerY" secondItem="qc5-nF-Rei" secondAttribute="centerY" id="BSv-4j-Xpl"/>
+                                        <constraint firstItem="ACx-TR-WDZ" firstAttribute="centerY" secondItem="ZIn-V9-w9f" secondAttribute="centerY" id="mJv-Ml-edd"/>
+                                        <constraint firstItem="ACx-TR-WDZ" firstAttribute="leading" secondItem="ZIn-V9-w9f" secondAttribute="trailing" constant="8" id="ok1-IM-MyG"/>
+                                        <constraint firstItem="ZIn-V9-w9f" firstAttribute="leading" secondItem="qc5-nF-Rei" secondAttribute="leading" constant="16" id="yDJ-IP-TyE"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="nameLabel" destination="rHS-zi-pKI" id="822-Gp-vJI"/>
+                                    <outlet property="nameLabel" destination="ACx-TR-WDZ" id="OgX-TI-twA"/>
                                     <outlet property="profileImageView" destination="ZIn-V9-w9f" id="3ds-Ui-tR7"/>
                                 </connections>
                             </tableViewCell>
@@ -228,11 +226,17 @@
                             <outlet property="delegate" destination="xBG-ki-skc" id="1dz-Nz-VBY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Likes" id="lcw-ud-l9S"/>
+                    <navigationItem key="navigationItem" title="Likes" id="lcw-ud-l9S">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="crq-N1-eKp">
+                            <connections>
+                                <action selector="pressedRefresh:" destination="xBG-ki-skc" id="Wz2-H5-UOQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gKG-5T-liG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3119" y="-90"/>
+            <point key="canvasLocation" x="3117.5999999999999" y="-90.404797601199405"/>
         </scene>
         <!--Comments-->
         <scene sceneID="lbf-6F-BSd">
@@ -362,7 +366,13 @@
                             <constraint firstItem="fWy-90-yXX" firstAttribute="top" secondItem="86m-WA-TH4" secondAttribute="top" id="qo5-cJ-HXZ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Comments" id="AJh-qc-hTT"/>
+                    <navigationItem key="navigationItem" title="Comments" id="AJh-qc-hTT">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="skd-iK-Pze">
+                            <connections>
+                                <action selector="pressedRefresh:" destination="UBX-BK-zm0" id="VTl-P7-UaL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="commentTextField" destination="onT-jW-F7U" id="wcJ-Rf-aLm"/>

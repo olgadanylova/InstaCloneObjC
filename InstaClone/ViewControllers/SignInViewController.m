@@ -47,6 +47,7 @@
 }
 
 - (IBAction)pressedSignIn:(id)sender {
+    [self.view endEditing:YES];
     if (self.emailField.text.length > 0 && self.passwordField.text > 0) {
         [backendless.userService setStayLoggedIn:YES];
         NSString *email = self.emailField.text;
@@ -67,6 +68,10 @@
     else {
         [alertViewController showErrorAlert:nil title:@"Invalid email or password" message:@"Please make sure you've entered your email and password correctly" target:self];
     }
+}
+
+- (IBAction)pressedRestorePassword:(id)sender {
+    [alertViewController showRestorePasswordAlert:self];
 }
 
 - (IBAction)pressedRegister:(id)sender {

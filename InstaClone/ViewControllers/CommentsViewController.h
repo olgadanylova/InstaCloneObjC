@@ -10,5 +10,6 @@
 @property (strong, nonatomic) Post *post;
 
 - (IBAction)pressedSend:(id)sender;
+- (IBAction)pressedRefresh:(id)sender;
 
 @end

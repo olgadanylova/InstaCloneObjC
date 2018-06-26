@@ -5,6 +5,7 @@
 #import "ProfileHeaderCollectionReusableView.h"
 #import "Post.h"
 #import "Backendless.h"
+#import "PictureHelper.h"
 
 @interface ProfileViewController() {
     NSInteger totalUsersCount;
@@ -21,22 +22,32 @@
     [self getUserPosts];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.delegate = self;
+}
+
 - (void)getUserPosts {
     DataQueryBuilder *queryBuilder = [DataQueryBuilder new];
     [queryBuilder setWhereClause:[NSString stringWithFormat:@"ownerId = '%@'", backendless.userService.currentUser.objectId]];
     [postStore find:queryBuilder response:^(NSArray *userPosts) {
-        self->posts = userPosts;
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
+        self->posts = [userPosts sortedArrayUsingDescriptors:@[sortDescriptor]];
         [[backendless.data of:[BackendlessUser class]] getObjectCount:^(NSNumber *usersCount) {
             self->totalUsersCount = [usersCount integerValue];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.collectionView reloadData];
-            });            
+            });
         } error:^(Fault *fault) {
             [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
         }];
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
     }];
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    [self scrollToTop];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -46,6 +57,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCollectionViewCell" forIndexPath:indexPath];
     cell.post = [posts objectAtIndex:indexPath.row];
+    [pictureHelper setPostPhoto:cell.post.photo forCell:cell];
     return cell;
 }
 
@@ -70,6 +82,18 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
+}
+
+- (void)scrollToTop {
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGPoint point = CGPointMake(0, - statusBarHeight - navBarHeight);
+    [self.collectionView setContentOffset:point animated:YES];
+}
+
+- (IBAction)pressedRefresh:(id)sender {
+    [self getUserPosts];
+    [self scrollToTop];
 }
 
 @end

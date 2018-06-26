@@ -38,7 +38,7 @@
     self.captionTextView.hidden = NO;
     self.clearButton.enabled = YES;
     [self.clearButton setTintColor:[colorHelper getColorFromHex:@"2C3E50" withAlpha:1]];
-    [self.shareButton setTitle:SHARE forState:UIControlStateNormal];    
+    [self.shareButton setTitle:SHARE forState:UIControlStateNormal];
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage] && picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         UIImage *imageTaken = [info valueForKey:UIImagePickerControllerOriginalImage];
@@ -61,17 +61,21 @@
     [self.view endEditing:YES];
 }
 
-- (IBAction)pressedShare:(id)sender {
+- (void)takePhoto {
     if ([self.shareButton.titleLabel.text isEqualToString:TAKE_PHOTO]) {
+        [self.view endEditing:YES];
         [alertViewController showTakePhotoAlert:self];
     }
-    else {
+}
+
+- (void)share {
+    if (![self.shareButton.titleLabel.text isEqualToString:TAKE_PHOTO]) {
+        self.activityIndicator.hidden = NO;
+        [self.activityIndicator startAnimating];
         NSString *photoFileName = [NSString stringWithFormat:@"/InstaClonePhotos/%@.png", [[NSUUID UUID] UUIDString]];
         UIImage *image = [pictureHelper scaleAndRotateImage:self.photoImageView.image];
         NSData *data = UIImagePNGRepresentation(image);
         [pictureHelper saveImageToUserDefaults:image withKey:photoFileName];
-        self.activityIndicator.hidden = NO;
-        [self.activityIndicator startAnimating];
         [backendless.file uploadFile:photoFileName content:data response:^(BackendlessFile *photo) {
             Post *newPost = [Post new];
             newPost.photo = photo.fileURL;
@@ -87,11 +91,15 @@
             } error:^(Fault *fault) {
                 [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
             }];
-            
         } error:^(Fault *fault) {
             [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
         }];
     }
+}
+
+- (IBAction)pressedShare:(id)sender {
+    [self takePhoto];
+    [self share];
 }
 
 - (IBAction)pressedClear:(id)sender {

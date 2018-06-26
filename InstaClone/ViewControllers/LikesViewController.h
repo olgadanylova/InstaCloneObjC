@@ -6,4 +6,6 @@
 
 @property (strong, nonatomic) Post *post;
 
+- (IBAction)pressedRefresh:(id)sender;
+
 @end

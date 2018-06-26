@@ -1,5 +1,6 @@
 
 #import "AlertViewController.h"
+#import "Backendless.h"
 
 @implementation AlertViewController
 
@@ -61,6 +62,35 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *OK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:action];
     [alert addAction:OK];
+    [target presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showRestorePasswordAlert:(UIViewController *)target {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"Restore password" message: @"Please enter your email address. Then check your inbox to restore the password" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"your email";
+        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    }];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Restore" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [target.view endEditing:YES];
+        NSArray *textfields = alert.textFields;
+        UITextField *emailField = textfields[0];
+        [backendless.userService restorePassword:emailField.text response:^{
+        } error:^(Fault *fault) {
+            [self showErrorAlert:fault.faultCode title:nil message:fault.message target:target];
+        }];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [target.view endEditing:YES];
+    }]];
+    [target presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showUpdateCompleteAlert:(UIViewController *)target {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"Profile updated" message: @"Your profile has been successfully updated" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [target dismissViewControllerAnimated:YES completion:nil];
+    }]];
     [target presentViewController:alert animated:YES completion:nil];
 }
 

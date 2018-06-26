@@ -4,6 +4,7 @@
 #import "LikeCell.h"
 #import "CommentCell.h"
 #import "ProfileHeaderCollectionReusableView.h"
+#import "PhotoCollectionViewCell.h"
 
 #define IMAGES_KEY @"instaCloneImages"
 
@@ -60,16 +61,52 @@
     });
 }
 
-- (void)setPostPhoto:(NSString *)photo forCell:(UITableViewCell *)cell {
+- (void)setProfilePicture:(NSString *)profilePicture forImageView:(UIImageView *)imageView {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *image;
+        if ([self getImageFromUserDefaults:profilePicture]) {
+            image = [self getImageFromUserDefaults:profilePicture];
+        }
+        else {
+            image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:profilePicture]]];
+            [self saveImageToUserDefaults:image withKey:profilePicture];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            imageView.image = image;
+        });
+    });
+}
+
+- (void)setPostPhoto:(NSString *)photo forCell:(id)cell {
     if ([cell isKindOfClass:[PostCell class]]) {
         PostCell *postCell = (PostCell *)cell;
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            if (!postCell.postImageView.image) {
-                postCell.activityIndicator.hidden = NO;
-                [postCell.activityIndicator startAnimating];
-            }
-        });       
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            UIImage *image;
+            if ([self getImageFromUserDefaults:photo]) {
+                image = [self getImageFromUserDefaults:photo];
+            }
+            else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    postCell.postImageView.image = nil;
+                    postCell.activityIndicator.hidden = NO;
+                    [postCell.activityIndicator startAnimating];
+                });
+                image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:photo]]];
+                [self saveImageToUserDefaults:image withKey:photo];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                postCell.postImageView.image = image;
+                postCell.activityIndicator.hidden = YES;
+                [postCell.activityIndicator stopAnimating];
+            });
+        });
+    }
+    else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
+        PhotoCollectionViewCell *collectionViewCell = (PhotoCollectionViewCell *)cell;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                collectionViewCell.photoImageView.image = nil;
+            });
             UIImage *image;
             if ([self getImageFromUserDefaults:photo]) {
                 image = [self getImageFromUserDefaults:photo];
@@ -79,9 +116,7 @@
                 [self saveImageToUserDefaults:image withKey:photo];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                postCell.postImageView.image = image;
-                postCell.activityIndicator.hidden = YES;
-                [postCell.activityIndicator stopAnimating];
+                collectionViewCell.photoImageView.image = image;
             });
         });
     }
@@ -196,6 +231,11 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
     }
+}
+
+- (void)removeImageFromUserDefaults:(NSString *)key {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (UIImage *)getImageFromUserDefaults:(NSString *)key {

@@ -8,6 +8,7 @@
 @interface CommentsViewController() {
     id<IDataStore>postStore;
     id<IDataStore>commentStore;
+    NSArray *comments;
 }
 @end
 
@@ -15,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.tableFooterView = [UIView new];
     self.commentTextField.delegate = self;
     [self.commentTextField addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
     postStore = [backendless.data of:[Post class]];
@@ -74,7 +76,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"CommentCell" forIndexPath:indexPath];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"created" ascending:YES];
-    Comment *comment = [[self.post.comments sortedArrayUsingDescriptors:@[sortDescriptor]] objectAtIndex:indexPath.row];
+    comments = [self.post.comments sortedArrayUsingDescriptors:@[sortDescriptor]];
+    Comment *comment = [comments objectAtIndex:indexPath.row];
     [backendless.userService findById:comment.ownerId response:^(BackendlessUser *user) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
@@ -96,7 +99,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Comment *comment = [self.post.comments objectAtIndex:indexPath.row];
+        Comment *comment = [comments objectAtIndex:indexPath.row];
         if ([comment.ownerId isEqualToString:backendless.userService.currentUser.objectId] ||
             [self.post.ownerId isEqualToString:backendless.userService.currentUser.objectId]) {
             [commentStore remove:comment response:^(NSNumber *removed) {
@@ -143,6 +146,10 @@
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
     }];
+}
+
+- (IBAction)pressedRefresh:(id)sender {
+    [self reloadTableData];
 }
 
 @end

@@ -27,6 +27,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadPosts];
+    [self scrollToTop];
+    self.tabBarController.delegate = self;
     self.navigationController.tabBarController.tabBar.hidden = NO;
 }
 
@@ -36,6 +38,7 @@
         self->posts = [postsFound sortedArrayUsingDescriptors:@[sortDescriptor]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
+            [self scrollToTop];
         });
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
@@ -59,7 +62,6 @@
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
     }];
-    
     [pictureHelper setPostPhoto:post.photo forCell:cell];
     
     [UIView setAnimationsEnabled:NO];
@@ -95,6 +97,10 @@
     [self performSegueWithIdentifier:@"ShowComments" sender:sender];
 }
 
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    [self scrollToTop];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     PostCell *cell = (PostCell *)[[sender superview] superview];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -121,6 +127,11 @@
     });
 }
 
+- (void)scrollToTop {
+    NSIndexPath *top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
+    [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
 - (IBAction)pressedLogout:(id)sender {
     [backendless.userService logout:^{
         [self performSegueWithIdentifier:@"unwindToSignIn" sender:nil];
@@ -131,6 +142,7 @@
 
 - (IBAction)pressedRefresh:(id)sender {
     [self loadPosts];
+    [self scrollToTop];
 }
 
 @end

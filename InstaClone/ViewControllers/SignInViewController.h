@@ -8,6 +8,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *signInButton;
 
 - (IBAction)pressedSignIn:(id)sender;
+- (IBAction)pressedRestorePassword:(id)sender;
 - (IBAction)pressedRegister:(id)sender;
 
 @end
