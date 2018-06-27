@@ -7,6 +7,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *userNameField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
+- (IBAction)pressedCancel:(id)sender;
 - (IBAction)pressedSave:(id)sender;
 - (IBAction)pressedRestorePassword:(id)sender;
 

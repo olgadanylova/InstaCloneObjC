@@ -75,6 +75,10 @@
     });
 }
 
+- (IBAction)pressedCancel:(id)sender {
+    
+}
+
 - (IBAction)pressedRestorePassword:(id)sender {
     [alertViewController showRestorePasswordAlert:self];
 }
@@ -87,35 +91,38 @@
         currentUser.name = self.userNameField.text;
     }
     if (profileImageChanged) {
-        NSString *profilePicture = [currentUser valueForKey:@"profilePicture"];
+        NSString *profilePicture = [currentUser getProperty:@"profilePicture"];
+        NSRange range = [profilePicture rangeOfString:@"InstaCloneProfilePictures"];
+        profilePicture = [profilePicture substringFromIndex:range.location];
         [backendless.file remove:profilePicture response:^{
             [pictureHelper removeImageFromUserDefaults:profilePicture];
             NSString *profileImageFileName = [NSString stringWithFormat:@"/InstaCloneProfilePictures/%@.png", [[NSUUID UUID] UUIDString]];
-            UIImage *image = [pictureHelper scaleAndRotateImage:self.profileImageView.image];
-            NSData *data = UIImagePNGRepresentation(image);
-            [pictureHelper saveImageToUserDefaults:image withKey:profileImageFileName];
-
-            [backendless.file uploadFile:profileImageFileName content:data response:^(BackendlessFile *profilePicture) {
-                [self->currentUser setProperty:@"profilePicture" object:profilePicture.fileURL];
-                [[backendless.data of:[BackendlessUser class]] save:self->currentUser response:^(BackendlessUser *updatedUser) {
-                    [alertViewController]
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImage *image = [pictureHelper scaleAndRotateImage:self.profileImageView.image];
+                NSData *data = UIImagePNGRepresentation(image);
+                [pictureHelper saveImageToUserDefaults:image withKey:profileImageFileName];
+                [backendless.file uploadFile:profileImageFileName content:data response:^(BackendlessFile *profilePicture) {
+                    [self->currentUser setProperty:@"profilePicture" object:profilePicture.fileURL];
+                    [[backendless.data ofTable:@"Users"] save:self->currentUser response:^(BackendlessUser *updatedUser) {
+                        [alertViewController showUpdateCompleteAlert:self];
+                    } error:^(Fault *fault) {
+                        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+                    }];
                 } error:^(Fault *fault) {
                     [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
                 }];
-
-            } error:^(Fault *fault) {
-                [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
-            }];
-
+            });
         } error:^(Fault *fault) {
             [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
         }];
     }
-    
-    [[backendless.data of:[BackendlessUser class]] save:self->currentUser response:^(BackendlessUser *updatedUser) {
-    } error:^(Fault *fault) {
-        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
-    }];
+    else {
+        [[backendless.data ofTable:@"Users"] save:currentUser response:^(BackendlessUser *updatedUser) {
+            [alertViewController showUpdateCompleteAlert:self];
+        } error:^(Fault *fault) {
+            [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+        }];
+    }   
 }
 
 @end

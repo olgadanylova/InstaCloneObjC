@@ -89,7 +89,7 @@
 - (void)showUpdateCompleteAlert:(UIViewController *)target {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"Profile updated" message: @"Your profile has been successfully updated" preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [target dismissViewControllerAnimated:YES completion:nil];
+        [target performSegueWithIdentifier:@"unwindToProfileVC" sender:nil];
     }]];
     [target presentViewController:alert animated:YES completion:nil];
 }

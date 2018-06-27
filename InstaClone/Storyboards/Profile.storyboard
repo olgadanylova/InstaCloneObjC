@@ -234,7 +234,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="dYH-zg-pMf">
                                 <rect key="frame" x="16" y="256" width="343" height="198.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfO-LQ-Qtg">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfO-LQ-Qtg">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -247,7 +247,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GAp-Fs-q4F">
                                         <rect key="frame" x="0.0" y="90.5" width="343" height="44"/>
@@ -297,7 +297,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Edit profile" id="Ve3-xI-LQB">
-                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="fQb-Eh-r06"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="fQb-Eh-r06">
+                            <connections>
+                                <action selector="pressedCancel:" destination="RVU-3E-qID" id="bjU-Ha-tZh"/>
+                                <segue destination="YXw-6m-NDB" kind="unwind" identifier="unwindToProfileVC" unwindAction="unwindToProfile:" id="RIb-wX-wa8"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="mpI-iW-fEh" id="n5G-84-7e7"/>
@@ -306,6 +311,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jad-AJ-l2r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="YXw-6m-NDB" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3960.8000000000002" y="2088.3058470764618"/>
         </scene>

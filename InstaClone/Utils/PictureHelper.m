@@ -234,7 +234,11 @@
 }
 
 - (void)removeImageFromUserDefaults:(NSString *)key {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:IMAGES_KEY];
+    NSMutableDictionary *images = [[NSKeyedUnarchiver unarchiveObjectWithData:data] mutableCopy];
+    [images removeObjectForKey:key];
+    data = [NSKeyedArchiver archivedDataWithRootObject:images];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:IMAGES_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

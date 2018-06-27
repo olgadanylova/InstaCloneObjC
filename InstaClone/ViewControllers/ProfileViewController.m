@@ -25,6 +25,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.delegate = self;
+    [self.collectionView reloadData];
 }
 
 - (void)getUserPosts {
@@ -94,6 +95,9 @@
 - (IBAction)pressedRefresh:(id)sender {
     [self getUserPosts];
     [self scrollToTop];
+}
+
+- (IBAction)unwindToProfile:(UIStoryboardSegue *)segue {
 }
 
 @end
