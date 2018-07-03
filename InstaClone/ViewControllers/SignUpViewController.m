@@ -91,11 +91,11 @@
                     }];
                 } error:^(Fault *fault) {
                     [self stopActivityIndicator];
-                    [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+                    [alertViewController showErrorAlert:fault.message target:self];
                 }];
             } error:^(Fault *fault) {
                 [self stopActivityIndicator];
-                [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+                [alertViewController showErrorAlert:fault.message target:self];
             }];
         }
         else {
@@ -108,12 +108,12 @@
                 }];
             } error:^(Fault *fault) {
                 [self stopActivityIndicator];
-                [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+                [alertViewController showErrorAlert:fault.message target:self];
             }];
         }
     }
     else {
-        [alertViewController showErrorAlert:nil title:@"Invalid user name, email or password" message:@"Please make sure you've entered your name, email and password correctly" target:self];
+        [alertViewController showErrorAlert:@"Please make sure you've entered your name, email and password correctly" target:self];
         [self stopActivityIndicator];
     }
 }

@@ -1,5 +1,7 @@
 
 #import "AlertViewController.h"
+#import "HomeViewController.h"
+#import "PostCell.h"
 #import "Backendless.h"
 
 @implementation AlertViewController
@@ -18,15 +20,8 @@
     [super viewDidLoad];
 }
 
-- (void)showErrorAlert:(NSString *)code title:(NSString *)title message:(NSString *)message target:(UIViewController *)target {
-    NSString *titleText = @"Error";
-    if (code) {
-        titleText = [NSString stringWithFormat:@"Error %@", code];
-    }
-    else if (title) {
-        titleText = title;
-    }
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:titleText message:message preferredStyle:UIAlertControllerStyleAlert];
+- (void)showErrorAlert:(NSString *)message target:(UIViewController *)target {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:dismiss];
     [target presentViewController:alert animated:YES completion:nil];
@@ -36,7 +31,7 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *useCamera = [UIAlertAction actionWithTitle:@"Use camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            [self showErrorAlert:nil title:@"No device found" message:@"Camera is not available" target:self];
+            [self showErrorAlert:@"Camera is not available" target:self];
         }
         else {
             UIImagePickerController *cameraPicker = [UIImagePickerController new];
@@ -77,7 +72,7 @@
         UITextField *emailField = textfields[0];
         [backendless.userService restorePassword:emailField.text response:^{
         } error:^(Fault *fault) {
-            [self showErrorAlert:fault.faultCode title:nil message:fault.message target:target];
+            [self showErrorAlert:fault.message target:target];
         }];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -87,10 +82,42 @@
 }
 
 - (void)showUpdateCompleteAlert:(UIViewController *)target {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"Profile updated" message: @"Your profile has been successfully updated" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Profile updated" message: @"Your profile has been successfully updated" preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [target performSegueWithIdentifier:@"unwindToProfileVC" sender:nil];
     }]];
+    [target presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showEditAlert:(Post *)post target:(UIViewController *)target {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    // **************************************
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"Edit" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [target performSegueWithIdentifier:@"ShowPost" sender:nil];
+    }]];
+    
+    // *******************************************
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        UIAlertController *confirmAlert = [UIAlertController alertControllerWithTitle:@"Delete post" message:@"Are you sure you want to delete this post?" preferredStyle:UIAlertControllerStyleAlert];
+        [confirmAlert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[backendless.data of:[Post class]] remove:post response:^(NSNumber *deleted) {
+                if ([target isKindOfClass:[HomeViewController class]]) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [((HomeViewController *)target) loadPosts];
+                        [((HomeViewController *)target) scrollToTop];
+                    });
+                }
+            } error:^(Fault *fault) {
+                [self showErrorAlert:fault.message target:target];
+            }];
+        }]];
+        [confirmAlert addAction:[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil]];
+        [target presentViewController:confirmAlert animated:YES completion:nil];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     [target presentViewController:alert animated:YES completion:nil];
 }
 

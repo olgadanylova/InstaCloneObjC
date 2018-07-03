@@ -106,21 +106,21 @@
                     [[backendless.data ofTable:@"Users"] save:self->currentUser response:^(BackendlessUser *updatedUser) {
                         [alertViewController showUpdateCompleteAlert:self];
                     } error:^(Fault *fault) {
-                        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+                        [alertViewController showErrorAlert:fault.message target:self];
                     }];
                 } error:^(Fault *fault) {
-                    [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+                    [alertViewController showErrorAlert:fault.message target:self];
                 }];
             });
         } error:^(Fault *fault) {
-            [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+            [alertViewController showErrorAlert:fault.message target:self];
         }];
     }
     else {
         [[backendless.data ofTable:@"Users"] save:currentUser response:^(BackendlessUser *updatedUser) {
             [alertViewController showUpdateCompleteAlert:self];
         } error:^(Fault *fault) {
-            [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+            [alertViewController showErrorAlert:fault.message target:self];
         }];
     }   
 }

@@ -88,7 +88,7 @@
             cell.dateLabel.text = [formatter stringFromDate:comment.created];
         });
     } error:^(Fault *fault) {
-        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+        [alertViewController showErrorAlert:fault.message target:self];
     }];
     return cell;
 }
@@ -105,11 +105,11 @@
             [commentStore remove:comment response:^(NSNumber *removed) {
                 [self reloadTableData];
             } error:^(Fault *fault) {
-                [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+                [alertViewController showErrorAlert:fault.message target:self];
             }];
         }
         else {
-            [alertViewController showErrorAlert:nil title:@"You have no permissions to delete this comment" message:@"Only the owner of this post or the person who left this comment delete it" target:self];
+            [alertViewController showErrorAlert:@"Only the owner of this post or the person who left this comment delete it" target:self];
         }
     }
 }
@@ -121,7 +121,7 @@
             [self.tableView reloadData];
         });
     } error:^(Fault *fault) {
-        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+        [alertViewController showErrorAlert:fault.message target:self];
     }];
 }
 
@@ -141,10 +141,10 @@
                                     [weakSelf reloadTableData];
                                 });
                             } error:^(Fault *fault) {
-                                [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:weakSelf];
+                                [alertViewController showErrorAlert:fault.message target:weakSelf];
                             }];
     } error:^(Fault *fault) {
-        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+        [alertViewController showErrorAlert:fault.message target:self];
     }];
 }
 

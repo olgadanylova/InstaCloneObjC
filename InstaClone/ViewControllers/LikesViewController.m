@@ -34,7 +34,7 @@
         });
         [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
     } error:^(Fault *fault) {
-        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+        [alertViewController showErrorAlert:fault.message target:self];
     }];
     return cell;
 }
@@ -46,7 +46,7 @@
             [self.tableView reloadData];
         });
     } error:^(Fault *fault) {
-        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+        [alertViewController showErrorAlert:fault.message target:self];
     }];
 }
 

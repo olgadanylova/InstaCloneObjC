@@ -87,12 +87,13 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.activityIndicator stopAnimating];
                     [self setDefaultView];
+                    [self performSegueWithIdentifier:@"unwindToHomeVC" sender:nil];
                 });
             } error:^(Fault *fault) {
-                [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+                [alertViewController showErrorAlert:fault.message target:self];
             }];
         } error:^(Fault *fault) {
-            [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+            [alertViewController showErrorAlert:fault.message target:self];
         }];
     }
 }

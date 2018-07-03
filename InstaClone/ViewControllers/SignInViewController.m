@@ -25,6 +25,13 @@
     if (backendless.userService.isValidUserToken && backendless.userService.currentUser) {
         timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(showTabBar) userInfo:nil repeats:NO];
     }
+    else {
+        [backendless.userService logout:^{
+            
+        } error:^(Fault *fault) {
+            [alertViewController showErrorAlert:fault.message target:self];
+        }];
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -62,11 +69,11 @@
                                   });                                  
                                   [self showTabBar];
                               } error:^(Fault *fault) {
-                                  [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+                                  [alertViewController showErrorAlert:fault.message target:self];
                               }];        
     }
     else {
-        [alertViewController showErrorAlert:nil title:@"Invalid email or password" message:@"Please make sure you've entered your email and password correctly" target:self];
+        [alertViewController showErrorAlert:@"Please make sure you've entered your email and password correctly" target:self];
     }
 }
 

@@ -17,8 +17,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.activityIndicator.hidden = YES;
-    
+    self.activityIndicator.hidden = YES;    
     UITapGestureRecognizer *likeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleLikeTap)];
     [self.likeImageView addGestureRecognizer:likeTapGesture];
     self.likeImageView.userInteractionEnabled = YES;
@@ -76,6 +75,14 @@
 
 - (void)changeLikesButtonTitle {
     [self.likeCountButton setTitle:[NSString stringWithFormat:@"%li Likes", (long)self.likesCount] forState:UIControlStateNormal];
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    CGFloat fixedWidth = textView.frame.size.width;
+    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    CGRect newFrame = textView.frame;
+    newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+    textView.frame = newFrame;
 }
 
 @end

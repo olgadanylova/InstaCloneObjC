@@ -3,6 +3,7 @@
 #import "AlertViewController.h"
 #import "LikesViewController.h"
 #import "CommentsViewController.h"
+#import "PostViewController.h"
 #import "PostCell.h"
 #import "PictureHelper.h"
 #import "Post.h"
@@ -18,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.estimatedRowHeight = 571;
+    self.tableView.estimatedRowHeight = 600;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     postStore = [backendless.data of:[Post class]];
     [self loadPosts];
@@ -41,7 +42,7 @@
             [self scrollToTop];
         });
     } error:^(Fault *fault) {
-        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+        [alertViewController showErrorAlert:fault.message target:self];
     }];
 }
 
@@ -60,7 +61,7 @@
             cell.nameLabel.text = user.name;
         });        
     } error:^(Fault *fault) {
-        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+        [alertViewController showErrorAlert:fault.message target:self];
     }];
     [pictureHelper setPostPhoto:post.photo forCell:cell];
     
@@ -105,7 +106,8 @@
     PostCell *cell = (PostCell *)[[sender superview] superview];
     dispatch_async(dispatch_get_main_queue(), ^{
         NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
-        [self loadPosts];
+        [self loadPosts]; 
+        
         if ([segue.identifier isEqualToString:@"ShowLikes"]) {
             NSString *currentPost = [self->posts objectAtIndex:indexPath.row].objectId;
             [self->postStore findById:currentPost response:^(Post *post) {
@@ -115,7 +117,7 @@
                     [likesVC.tableView reloadData];
                 });
             } error:^(Fault *fault) {
-                [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+                [alertViewController showErrorAlert:fault.message target:self];
             }];
         }
         else if ([segue.identifier isEqualToString:@"ShowComments"]) {
@@ -123,6 +125,13 @@
             CommentsViewController *commentsVC = [segue destinationViewController];
             commentsVC.post = currentPost;
             [commentsVC.tableView reloadData];
+        }
+        else if ([segue.identifier isEqualToString:@"ShowPost"]) {
+            Post *currentPost = [self->posts objectAtIndex:indexPath.row];
+            PostViewController *postVC = [segue destinationViewController];
+            postVC.navigationItem.title = @"Edit post";
+            postVC.editing = YES;
+            postVC.post = currentPost;
         }
     });
 }
@@ -136,13 +145,23 @@
     [backendless.userService logout:^{
         [self performSegueWithIdentifier:@"unwindToSignIn" sender:nil];
     } error:^(Fault *fault) {
-        [alertViewController showErrorAlert:fault.faultCode title:nil message:fault.message target:self];
+        [alertViewController showErrorAlert:fault.message target:self];
     }];
 }
 
 - (IBAction)pressedRefresh:(id)sender {
     [self loadPosts];
     [self scrollToTop];
+}
+
+- (IBAction)pressedEdit:(id)sender {
+    PostCell *postCell = (PostCell *)[[sender superview]superview];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:postCell];
+    Post *post = [posts objectAtIndex:indexPath.row];
+    [alertViewController showEditAlert:post target:self];
+}
+
+- (IBAction)unwindToHome:(UIStoryboardSegue *)segue {
 }
 
 @end

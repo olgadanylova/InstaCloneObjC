@@ -16,6 +16,8 @@
 		5A2F8D8920920B3E00E51D5C /* LikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2F8D8820920B3E00E51D5C /* LikeCell.m */; };
 		5A3DFDCD208F47150071544C /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3DFDCC208F47150071544C /* CameraViewController.m */; };
 		5A3DFDD1208F63C20071544C /* ColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3DFDD0208F63C20071544C /* ColorHelper.m */; };
+		5AA3897120EBB45E001C8873 /* Post.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AA3897020EBB45E001C8873 /* Post.storyboard */; };
+		5AA3897A20EBC1E6001C8873 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA3897920EBC1E6001C8873 /* PostViewController.m */; };
 		5AB0915F20E2682900FD6736 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB0915E20E2682900FD6736 /* EditProfileViewController.m */; };
 		5ADC1914208F89D600583E5B /* PictureHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC1913208F89D600583E5B /* PictureHelper.m */; };
 		5E19A14920975FB60083D789 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E19A14820975FB60083D789 /* ProfileViewController.m */; };
@@ -56,6 +58,9 @@
 		5A3DFDCC208F47150071544C /* CameraViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		5A3DFDCF208F63C20071544C /* ColorHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorHelper.h; sourceTree = "<group>"; };
 		5A3DFDD0208F63C20071544C /* ColorHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorHelper.m; sourceTree = "<group>"; };
+		5AA3897020EBB45E001C8873 /* Post.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Post.storyboard; sourceTree = "<group>"; };
+		5AA3897820EBC1E6001C8873 /* PostViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostViewController.h; sourceTree = "<group>"; };
+		5AA3897920EBC1E6001C8873 /* PostViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostViewController.m; sourceTree = "<group>"; };
 		5AB0915D20E2682900FD6736 /* EditProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
 		5AB0915E20E2682900FD6736 /* EditProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		5ADC1912208F89D600583E5B /* PictureHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PictureHelper.h; sourceTree = "<group>"; };
@@ -197,6 +202,7 @@
 				5EB7BAE42089DC540073FC64 /* Profile.storyboard */,
 				5EB7BAE52089DC540073FC64 /* Start.storyboard */,
 				5EB7BAE62089DC540073FC64 /* TabBar.storyboard */,
+				5AA3897020EBB45E001C8873 /* Post.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -224,6 +230,8 @@
 				5E19A14B2097647C0083D789 /* ProfileHeaderCollectionReusableView.m */,
 				5AB0915D20E2682900FD6736 /* EditProfileViewController.h */,
 				5AB0915E20E2682900FD6736 /* EditProfileViewController.m */,
+				5AA3897820EBC1E6001C8873 /* PostViewController.h */,
+				5AA3897920EBC1E6001C8873 /* PostViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -309,6 +317,7 @@
 				5EB7BAE72089DC540073FC64 /* Camera.storyboard in Resources */,
 				5EB7BAE92089DC540073FC64 /* Profile.storyboard in Resources */,
 				0F7A633C1E769BB6007B6B07 /* Assets.xcassets in Resources */,
+				5AA3897120EBB45E001C8873 /* Post.storyboard in Resources */,
 				5EB7BAE82089DC540073FC64 /* Home.storyboard in Resources */,
 				5EB7BAEB2089DC540073FC64 /* TabBar.storyboard in Resources */,
 				5EB7BAEA2089DC540073FC64 /* Start.storyboard in Resources */,
@@ -371,6 +380,7 @@
 				5EF66A3F208A386500D33BFD /* AlertViewController.m in Sources */,
 				0F7A63341E769BB6007B6B07 /* AppDelegate.m in Sources */,
 				5EF66A3C208A347A00D33BFD /* SignUpViewController.m in Sources */,
+				5AA3897A20EBC1E6001C8873 /* PostViewController.m in Sources */,
 				5A3DFDCD208F47150071544C /* CameraViewController.m in Sources */,
 				5E69E32C20970D1E0037CEE9 /* CommentsViewController.m in Sources */,
 				5A3DFDD1208F63C20071544C /* ColorHelper.m in Sources */,
