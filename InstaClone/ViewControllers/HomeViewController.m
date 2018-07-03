@@ -54,7 +54,8 @@
     PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"HomeCell" forIndexPath:indexPath];
     Post *post = [posts objectAtIndex:indexPath.row];
     cell.post = post;
-    cell.parentVC = self;
+    cell.editButton.enabled = NO;
+    cell.editButton.hidden = YES;
     
     [backendless.userService findById:post.ownerId response:^(BackendlessUser *user) {
         [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
@@ -115,13 +116,6 @@
         CommentsViewController *commentsVC = [segue destinationViewController];
         commentsVC.post = post;
         [commentsVC.tableView reloadData];
-    }
-    else if ([segue.identifier isEqualToString:@"ShowPost"]) {
-        PostViewController *postVC = [segue destinationViewController];
-        postVC.navigationItem.title = @"Edit post";
-        postVC.edit = YES;
-        postVC.post = post;
-        [postVC.tableView reloadData];
     }
 }
 

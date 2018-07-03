@@ -85,6 +85,10 @@
     return 0;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
 - (void)scrollToTop {
     CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
     CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
