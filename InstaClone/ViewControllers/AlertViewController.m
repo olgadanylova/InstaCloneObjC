@@ -95,7 +95,7 @@
     // **************************************
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Edit" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [target performSegueWithIdentifier:@"ShowPost" sender:nil];
+        [target performSegueWithIdentifier:@"ShowPost" sender:post];
     }]];
     
     // *******************************************

@@ -66,7 +66,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaj-xI-QJq">
-                                                    <rect key="frame" x="8" y="482" width="30" height="72.5"/>
+                                                    <rect key="frame" x="8" y="482" width="30" height="30"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal">
                                                         <color key="titleColor" red="0.20392156859999999" green="0.28627450980000002" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -97,26 +97,24 @@
                                                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="pressedEdit:" destination="oCz-LK-P5G" eventType="touchUpInside" id="UOa-ZQ-83B"/>
+                                                        <action selector="pressedEdit:" destination="jGc-Fo-MMv" eventType="touchUpInside" id="pLN-Rb-UQE"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Caption" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ncv-jN-vJ3">
-                                                    <rect key="frame" x="8" y="554.5" width="359" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Caption" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWE-ws-Qgr">
+                                                    <rect key="frame" x="8" y="474" width="359" height="118"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="88l-ap-4T1" firstAttribute="top" secondItem="OQa-iC-ZzF" secondAttribute="top" constant="8" id="3nb-qv-X8w"/>
+                                                <constraint firstAttribute="trailing" secondItem="EWE-ws-Qgr" secondAttribute="trailing" constant="8" id="66p-CU-Xlu"/>
                                                 <constraint firstAttribute="trailing" secondItem="r05-u6-Lvw" secondAttribute="trailing" id="7Yi-WK-1L4"/>
-                                                <constraint firstItem="Ncv-jN-vJ3" firstAttribute="leading" secondItem="OQa-iC-ZzF" secondAttribute="leading" constant="8" id="9Id-78-ZQt"/>
                                                 <constraint firstItem="h3n-Fn-OeS" firstAttribute="top" secondItem="r05-u6-Lvw" secondAttribute="bottom" constant="8" id="BIz-nI-S6G"/>
                                                 <constraint firstItem="oaj-xI-QJq" firstAttribute="leading" secondItem="OQa-iC-ZzF" secondAttribute="leading" constant="8" id="ExV-S3-YbK"/>
                                                 <constraint firstItem="xv3-Zz-6l8" firstAttribute="centerY" secondItem="h3n-Fn-OeS" secondAttribute="centerY" id="NKL-ml-n3M"/>
                                                 <constraint firstItem="r05-u6-Lvw" firstAttribute="leading" secondItem="OQa-iC-ZzF" secondAttribute="leading" id="QQa-Fq-Fvt"/>
-                                                <constraint firstAttribute="trailing" secondItem="Ncv-jN-vJ3" secondAttribute="trailing" constant="8" id="T89-7V-roh"/>
-                                                <constraint firstItem="Ncv-jN-vJ3" firstAttribute="top" secondItem="oaj-xI-QJq" secondAttribute="bottom" id="UQE-1T-kTa"/>
                                                 <constraint firstItem="xv3-Zz-6l8" firstAttribute="leading" secondItem="h3n-Fn-OeS" secondAttribute="trailing" constant="10" id="Wrn-td-SWE"/>
                                                 <constraint firstItem="WmV-Lc-f0R" firstAttribute="centerY" secondItem="r05-u6-Lvw" secondAttribute="centerY" id="XGU-fR-wuI"/>
                                                 <constraint firstItem="88l-ap-4T1" firstAttribute="centerY" secondItem="Ceh-RK-QtZ" secondAttribute="centerY" id="YZf-eF-8Ff"/>
@@ -126,17 +124,19 @@
                                                 <constraint firstAttribute="trailing" secondItem="49N-oN-ToS" secondAttribute="trailing" constant="8" id="dp7-OH-Qpd"/>
                                                 <constraint firstItem="49N-oN-ToS" firstAttribute="centerY" secondItem="xv3-Zz-6l8" secondAttribute="centerY" id="e5g-xO-opj"/>
                                                 <constraint firstItem="oaj-xI-QJq" firstAttribute="top" secondItem="h3n-Fn-OeS" secondAttribute="bottom" constant="8" id="eXV-n7-M6c"/>
-                                                <constraint firstAttribute="bottom" secondItem="Ncv-jN-vJ3" secondAttribute="bottom" constant="25" id="fNv-uG-1lr"/>
+                                                <constraint firstItem="EWE-ws-Qgr" firstAttribute="leading" secondItem="OQa-iC-ZzF" secondAttribute="leading" constant="8" id="f59-SZ-Ibw"/>
                                                 <constraint firstAttribute="trailing" secondItem="MKb-ok-Xt3" secondAttribute="trailing" constant="8" id="hPx-de-0DY"/>
                                                 <constraint firstItem="h3n-Fn-OeS" firstAttribute="leading" secondItem="OQa-iC-ZzF" secondAttribute="leading" constant="8" id="kwp-Mv-AbB"/>
+                                                <constraint firstAttribute="bottom" secondItem="EWE-ws-Qgr" secondAttribute="bottom" constant="8" id="mIg-R6-XzC"/>
                                                 <constraint firstItem="Ceh-RK-QtZ" firstAttribute="left" secondItem="88l-ap-4T1" secondAttribute="right" constant="8" id="n2A-pR-qpy"/>
                                                 <constraint firstItem="88l-ap-4T1" firstAttribute="leading" secondItem="OQa-iC-ZzF" secondAttribute="leading" constant="8" id="nCE-hw-Meh"/>
+                                                <constraint firstItem="EWE-ws-Qgr" firstAttribute="top" secondItem="h3n-Fn-OeS" secondAttribute="bottom" id="pBt-rv-kLH"/>
                                                 <constraint firstAttribute="right" secondItem="Ceh-RK-QtZ" secondAttribute="right" constant="8" id="rgm-as-x3B"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="activityIndicator" destination="WmV-Lc-f0R" id="1Ra-bj-GuX"/>
-                                            <outlet property="captionLabel" destination="Ncv-jN-vJ3" id="Kip-kD-e52"/>
+                                            <outlet property="captionTextView" destination="EWE-ws-Qgr" id="3j3-Jy-H2P"/>
                                             <outlet property="commentsButton" destination="xv3-Zz-6l8" id="mn0-jc-S9t"/>
                                             <outlet property="dateLabel" destination="49N-oN-ToS" id="8qz-7P-98M"/>
                                             <outlet property="likeCountButton" destination="oaj-xI-QJq" id="UhL-AV-mY5"/>
@@ -191,7 +191,7 @@
         <!--Likes-->
         <scene sceneID="ILN-N9-8Qf">
             <objects>
-                <tableViewController id="xBG-ki-skc" customClass="LikesViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="LikesViewController" id="xBG-ki-skc" customClass="LikesViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qXu-15-0CG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -264,7 +264,7 @@
         <!--Comments-->
         <scene sceneID="lbf-6F-BSd">
             <objects>
-                <viewController id="UBX-BK-zm0" customClass="CommentsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommentsViewController" id="UBX-BK-zm0" customClass="CommentsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MmO-s0-6mT"/>
                         <viewControllerLayoutGuide type="bottom" id="Mg1-Tl-mZj"/>

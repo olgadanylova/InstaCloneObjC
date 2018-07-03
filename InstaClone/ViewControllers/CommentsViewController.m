@@ -33,6 +33,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     self.tabBarController.tabBar.hidden = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification {

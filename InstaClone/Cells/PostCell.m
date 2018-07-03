@@ -24,6 +24,8 @@
     
     postStore = [backendless.data of:[Post class]];
     likeStore = [backendless.data of:[Likee class]];
+    
+    self.captionTextView.delegate = self;
 }
 
 - (void)handleLikeTap {
@@ -78,11 +80,11 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
-    CGFloat fixedWidth = textView.frame.size.width;
-    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
-    CGRect newFrame = textView.frame;
-    newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
-    textView.frame = newFrame;
+    [textView sizeToFit];
+}
+
+- (IBAction)pressedEdit:(id)sender {
+    [alertViewController showEditAlert:self.post target:self.parentVC];
 }
 
 @end

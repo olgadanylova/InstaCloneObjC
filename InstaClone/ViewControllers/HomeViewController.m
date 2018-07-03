@@ -54,12 +54,13 @@
     PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"HomeCell" forIndexPath:indexPath];
     Post *post = [posts objectAtIndex:indexPath.row];
     cell.post = post;
+    cell.parentVC = self;
     
     [backendless.userService findById:post.ownerId response:^(BackendlessUser *user) {
         [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.nameLabel.text = user.name;
-        });        
+        });
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.message target:self];
     }];
@@ -86,7 +87,7 @@
         cell.likeImageView.image = [UIImage imageNamed:@"like.png"];
     }
     
-    cell.captionLabel.text = post.caption;
+    cell.captionTextView.text = post.caption;
     return cell;
 }
 
@@ -103,37 +104,25 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    PostCell *cell = (PostCell *)[[sender superview] superview];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
-        [self loadPosts]; 
+    Post *post = sender;
+    if ([segue.identifier isEqualToString:@"ShowLikes"]) {
+        LikesViewController *likesVC = (LikesViewController *)[segue destinationViewController];
+        likesVC.post = post;
+        [likesVC.tableView reloadData];
         
-        if ([segue.identifier isEqualToString:@"ShowLikes"]) {
-            NSString *currentPost = [self->posts objectAtIndex:indexPath.row].objectId;
-            [self->postStore findById:currentPost response:^(Post *post) {
-                LikesViewController *likesVC = (LikesViewController *)[segue destinationViewController];
-                likesVC.post = post;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [likesVC.tableView reloadData];
-                });
-            } error:^(Fault *fault) {
-                [alertViewController showErrorAlert:fault.message target:self];
-            }];
-        }
-        else if ([segue.identifier isEqualToString:@"ShowComments"]) {
-            Post *currentPost = [self->posts objectAtIndex:indexPath.row];
-            CommentsViewController *commentsVC = [segue destinationViewController];
-            commentsVC.post = currentPost;
-            [commentsVC.tableView reloadData];
-        }
-        else if ([segue.identifier isEqualToString:@"ShowPost"]) {
-            Post *currentPost = [self->posts objectAtIndex:indexPath.row];
-            PostViewController *postVC = [segue destinationViewController];
-            postVC.navigationItem.title = @"Edit post";
-            postVC.editing = YES;
-            postVC.post = currentPost;
-        }
-    });
+    }
+    else if ([segue.identifier isEqualToString:@"ShowComments"]) {
+        CommentsViewController *commentsVC = [segue destinationViewController];
+        commentsVC.post = post;
+        [commentsVC.tableView reloadData];
+    }
+    else if ([segue.identifier isEqualToString:@"ShowPost"]) {
+        PostViewController *postVC = [segue destinationViewController];
+        postVC.navigationItem.title = @"Edit post";
+        postVC.edit = YES;
+        postVC.post = post;
+        [postVC.tableView reloadData];
+    }
 }
 
 - (void)scrollToTop {
@@ -152,13 +141,6 @@
 - (IBAction)pressedRefresh:(id)sender {
     [self loadPosts];
     [self scrollToTop];
-}
-
-- (IBAction)pressedEdit:(id)sender {
-    PostCell *postCell = (PostCell *)[[sender superview]superview];
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:postCell];
-    Post *post = [posts objectAtIndex:indexPath.row];
-    [alertViewController showEditAlert:post target:self];
 }
 
 - (IBAction)unwindToHome:(UIStoryboardSegue *)segue {
