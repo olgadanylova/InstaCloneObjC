@@ -12,8 +12,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.estimatedRowHeight = 450;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 44;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -49,10 +48,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 2) {
-        return UITableViewAutomaticDimension;
-    }
-    return UITableViewAutomaticDimension;;
+    return UITableViewAutomaticDimension;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -98,8 +94,8 @@
     }
     else if (indexPath.section == 2) {
         PostCaptionCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"PostCaptionCell" forIndexPath:indexPath];
-        cell.captionTextView.text = self.post.caption;
         cell.captionTextView.delegate = self;
+        cell.captionTextView.text = self.post.caption;
         if(self.editMode) {
             cell.captionTextView.editable = YES;
         }
@@ -134,6 +130,11 @@
     }
 }
 
+- (void)scrollToTop {
+    NSIndexPath *top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
+    [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
 - (IBAction)pressedCancel:(id)sender {
     self.editMode = NO;
     [self.tableView reloadData];
@@ -141,6 +142,7 @@
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.rightBarButtonItem = nil;
     self.navigationItem.hidesBackButton = NO;
+    [self scrollToTop];
 }
 
 - (IBAction)pressedSave:(id)sender {
@@ -152,11 +154,17 @@
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.rightBarButtonItem = nil;
     self.navigationItem.hidesBackButton = NO;
+    [self scrollToTop];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
+    [UIView setAnimationsEnabled:NO];
+    [textView sizeToFit];
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
+    [UIView setAnimationsEnabled:YES];    
+    NSIndexPath *lastIndex = [NSIndexPath indexPathForRow:0 inSection:2];
+    [self.tableView scrollToRowAtIndexPath:lastIndex atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
 
 @end
