@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.estimatedRowHeight = 600;
+    self.tableView.estimatedRowHeight = 550;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     postStore = [backendless.data of:[Post class]];
     [self loadPosts];
@@ -51,11 +51,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"HomeCell" forIndexPath:indexPath];
+    PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"PostCell" forIndexPath:indexPath];
     Post *post = [posts objectAtIndex:indexPath.row];
     cell.post = post;
-    cell.editButton.enabled = NO;
-    cell.editButton.hidden = YES;
     
     [backendless.userService findById:post.ownerId response:^(BackendlessUser *user) {
         [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
@@ -88,7 +86,7 @@
         cell.likeImageView.image = [UIImage imageNamed:@"like.png"];
     }
     
-    cell.captionTextView.text = post.caption;
+    cell.captionLabel.text = post.caption;
     return cell;
 }
 
@@ -105,7 +103,9 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    Post *post = sender;
+    PostCell *cell = (PostCell *)((UIButton *)sender).superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    Post *post = [posts objectAtIndex:indexPath.row];
     if ([segue.identifier isEqualToString:@"ShowLikes"]) {
         LikesViewController *likesVC = (LikesViewController *)[segue destinationViewController];
         likesVC.post = post;

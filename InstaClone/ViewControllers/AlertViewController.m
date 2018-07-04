@@ -1,7 +1,8 @@
 
 #import "AlertViewController.h"
-#import "HomeViewController.h"
+#import "PostViewController.h"
 #import "PostCell.h"
+#import "PostCaptionCell.h"
 #import "Backendless.h"
 
 @implementation AlertViewController
@@ -95,7 +96,21 @@
     // **************************************
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Edit" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [target performSegueWithIdentifier:@"ShowPost" sender:post];
+        if ([target isKindOfClass:[PostViewController class]]) {
+            PostViewController *postVC = (PostViewController *)target;
+            postVC.editMode = YES;
+            [postVC.tableView reloadData];
+            
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
+            PostCaptionCell *cell = (PostCaptionCell *)[postVC.tableView cellForRowAtIndexPath: indexPath];
+            [cell.captionTextView becomeFirstResponder];      
+            
+            postVC.navigationItem.title = @"Edit post";
+            UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:postVC action:@selector(pressedCancel:)];
+            postVC.navigationItem.leftBarButtonItem = cancelButton;
+            UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:postVC action:@selector(pressedSave:)];
+            postVC.navigationItem.rightBarButtonItem = saveButton;
+        }
     }]];
     
     // *******************************************
@@ -104,10 +119,9 @@
         UIAlertController *confirmAlert = [UIAlertController alertControllerWithTitle:@"Delete post" message:@"Are you sure you want to delete this post?" preferredStyle:UIAlertControllerStyleAlert];
         [confirmAlert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[backendless.data of:[Post class]] remove:post response:^(NSNumber *deleted) {
-                if ([target isKindOfClass:[HomeViewController class]]) {
+                if ([target isKindOfClass:[PostViewController class]]) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [((HomeViewController *)target) loadPosts];
-                        [((HomeViewController *)target) scrollToTop];
+                        [target performSegueWithIdentifier:@"unwindToProfileVC" sender:nil];
                     });
                 }
             } error:^(Fault *fault) {

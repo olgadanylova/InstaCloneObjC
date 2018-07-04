@@ -24,8 +24,6 @@
     
     postStore = [backendless.data of:[Post class]];
     likeStore = [backendless.data of:[Likee class]];
-    
-    self.captionTextView.delegate = self;
 }
 
 - (void)handleLikeTap {
@@ -79,12 +77,8 @@
     [self.likeCountButton setTitle:[NSString stringWithFormat:@"%li Likes", (long)self.likesCount] forState:UIControlStateNormal];
 }
 
-- (void)textViewDidChange:(UITextView *)textView {
-    [textView sizeToFit];
-}
-
 - (IBAction)pressedEdit:(id)sender {
-    [alertViewController showEditAlert:self.post target:self.parentVC];
+    [alertViewController showEditAlert:self.post target:self.postViewController];
 }
 
 @end

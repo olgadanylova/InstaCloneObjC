@@ -1,6 +1,7 @@
 
 #import "ProfileViewController.h"
 #import "AlertViewController.h"
+#import "PostViewController.h"
 #import "PhotoCollectionViewCell.h"
 #import "ProfileHeaderCollectionReusableView.h"
 #import "Post.h"
@@ -25,7 +26,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.delegate = self;
-    [self.collectionView reloadData];
+    [self getUserPosts];
 }
 
 - (void)getUserPosts {
@@ -37,7 +38,10 @@
         [[backendless.data of:[BackendlessUser class]] getObjectCount:^(NSNumber *usersCount) {
             self->totalUsersCount = [usersCount integerValue];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.collectionView reloadData];
+                //[self.collectionView reloadData];
+                [self.collectionView performBatchUpdates:^{
+                    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+                } completion:nil];
             });
         } error:^(Fault *fault) {
             [alertViewController showErrorAlert:fault.message target:self];
@@ -86,7 +90,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [self performSegueWithIdentifier:@"ShowPost" sender:[posts objectAtIndex:indexPath.row]];
 }
 
 - (void)scrollToTop {
@@ -101,7 +105,17 @@
     [self scrollToTop];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ShowPost"]) {
+        PostViewController *postVC = [segue destinationViewController];
+        postVC.post = sender;
+        postVC.editMode = NO;
+        [postVC.tableView reloadData];
+    }
+}
+
 - (IBAction)unwindToProfile:(UIStoryboardSegue *)segue {
+    [self getUserPosts];
 }
 
 @end

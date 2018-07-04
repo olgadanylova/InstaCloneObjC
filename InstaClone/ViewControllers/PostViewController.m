@@ -5,17 +5,23 @@
 #import "CommentsViewController.h"
 #import "PictureHelper.h"
 #import "PostCell.h"
+#import "PostCaptionCell.h"
 #import "Backendless.h"
 
 @implementation PostViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.estimatedRowHeight = 450;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tabBarController.tabBar setHidden:YES];
+    if (!self.editMode) {
+        [self.navigationItem setHidesBackButton:NO];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -24,18 +30,36 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    if (self.post) {
+        if (section == 0 || section == 2) {
+            return 1;
+        }
+        else if (section == 1) {
+            if (self.editMode) {
+                return 0;
+            }
+            return 1;
+        }
+    }
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2) {
+        return UITableViewAutomaticDimension;
+    }
+    return UITableViewAutomaticDimension;;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"PostCell" forIndexPath:indexPath];
-    [self configureCellIfEdit:cell];
-    if (self.post) {
+    if (indexPath.section == 0) {
+        PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"PostPhotoCell" forIndexPath:indexPath];
         cell.post = self.post;
+        cell.postViewController = self;
         [backendless.userService findById:self.post.ownerId response:^(BackendlessUser *user) {
             [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -45,7 +69,11 @@
             [alertViewController showErrorAlert:fault.message target:self];
         }];
         [pictureHelper setPostPhoto:self.post.photo forCell:cell];
-        
+        return cell;
+    }
+    else if (indexPath.section == 1) {
+        PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"PostLikesAndCommentsCell" forIndexPath:indexPath];
+        cell.post = self.post;
         [UIView setAnimationsEnabled:NO];
         [cell.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", (unsigned long)[self.post.likes count]] forState:UIControlStateNormal];
         [UIView setAnimationsEnabled:YES];
@@ -66,24 +94,21 @@
             cell.liked = NO;
             cell.likeImageView.image = [UIImage imageNamed:@"like.png"];
         }
-        
-        cell.captionTextView.text = self.post.caption;
-    } 
-    return cell;
-}
-
-- (void)configureCellIfEdit:(PostCell *)cell {
-    if (self.edit) {
-        cell.editButton.enabled = NO;
-        cell.editButton.hidden = YES;
-        cell.likeImageView.userInteractionEnabled = NO;
-        cell.likeImageView.hidden = YES;
-        cell.commentsButton.enabled = NO;
-        cell.commentsButton.hidden = YES;
-        cell.likeCountButton.enabled = NO;
-        cell.likeCountButton.hidden = YES;
-        [cell.captionTextView becomeFirstResponder];
+        return cell;
     }
+    else if (indexPath.section == 2) {
+        PostCaptionCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"PostCaptionCell" forIndexPath:indexPath];
+        cell.captionTextView.text = self.post.caption;
+        cell.captionTextView.delegate = self;
+        if(self.editMode) {
+            cell.captionTextView.editable = YES;
+        }
+        else {
+            cell.captionTextView.editable = NO;
+        }
+        return cell;
+    }
+    return nil;
 }
 
 - (void)likesButtonTapped:(UIButton *)sender {
@@ -107,6 +132,31 @@
         commentsVC.post = self.post;
         [commentsVC.tableView reloadData];
     }
+}
+
+- (IBAction)pressedCancel:(id)sender {
+    self.editMode = NO;
+    [self.tableView reloadData];
+    self.navigationItem.title = nil;
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.hidesBackButton = NO;
+}
+
+- (IBAction)pressedSave:(id)sender {
+    PostCaptionCell *cell = (PostCaptionCell *)[(UITableView *)self.view cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+    self.post.caption = cell.captionTextView.text;    
+    self.editMode = NO;
+    [self.tableView reloadData];
+    self.navigationItem.title = nil;
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.hidesBackButton = NO;
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 @end
