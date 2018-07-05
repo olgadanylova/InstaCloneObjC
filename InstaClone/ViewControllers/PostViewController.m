@@ -147,14 +147,20 @@
 
 - (IBAction)pressedSave:(id)sender {
     PostCaptionCell *cell = (PostCaptionCell *)[(UITableView *)self.view cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
-    self.post.caption = cell.captionTextView.text;    
-    self.editMode = NO;
-    [self.tableView reloadData];
-    self.navigationItem.title = nil;
-    self.navigationItem.leftBarButtonItem = nil;
-    self.navigationItem.rightBarButtonItem = nil;
-    self.navigationItem.hidesBackButton = NO;
-    [self scrollToTop];
+    self.post.caption = cell.captionTextView.text;
+    [[backendless.data of:[Post class]] save:self.post response:^(Post *editedPost) {
+        self.editMode = NO;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            self.navigationItem.title = nil;
+            self.navigationItem.leftBarButtonItem = nil;
+            self.navigationItem.rightBarButtonItem = nil;
+            self.navigationItem.hidesBackButton = NO;
+            [self scrollToTop];
+        });        
+    } error:^(Fault * fault) {
+        [alertViewController showErrorAlert:fault.message target:self];
+    }];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
