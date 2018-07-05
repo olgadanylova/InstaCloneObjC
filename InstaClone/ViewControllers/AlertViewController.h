@@ -8,6 +8,7 @@
 
 + (instancetype)sharedInstance;
 - (void)showErrorAlert:(NSString *)message target:(UIViewController *)target;
+- (void)showErrorAlertWithExit:(UIViewController *)target;
 - (void)showTakePhotoAlert:(UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate> *)target;
 - (void)showSegueAlert:(NSString *)title message:(NSString *)message target:(UIViewController *)target action:(void(^)(UIAlertAction *))action;
 - (void)showRestorePasswordAlert:(UIViewController *)target;

@@ -28,6 +28,15 @@
     [target presentViewController:alert animated:YES completion:nil];
 }
 
+- (void)showErrorAlertWithExit:(UIViewController *)target {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Make sure to configure the app with your APP ID and API KEY before running the app. \nApplication will be closed" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        exit(0);
+    }];
+    [alert addAction:dismiss];
+    [target presentViewController:alert animated:YES completion:nil];
+}
+
 - (void)showTakePhotoAlert:(UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate> *)target {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *useCamera = [UIAlertAction actionWithTitle:@"Use camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -93,8 +102,6 @@
 - (void)showEditAlert:(Post *)post target:(UIViewController *)target {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
     
-    // **************************************
-    
     [alert addAction:[UIAlertAction actionWithTitle:@"Edit" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if ([target isKindOfClass:[PostViewController class]]) {
             PostViewController *postVC = (PostViewController *)target;
@@ -112,8 +119,6 @@
             postVC.navigationItem.rightBarButtonItem = saveButton;
         }
     }]];
-    
-    // *******************************************
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         UIAlertController *confirmAlert = [UIAlertController alertControllerWithTitle:@"Delete post" message:@"Are you sure you want to delete this post?" preferredStyle:UIAlertControllerStyleAlert];

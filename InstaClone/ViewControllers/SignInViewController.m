@@ -29,7 +29,12 @@
         [backendless.userService logout:^{
             
         } error:^(Fault *fault) {
-            [alertViewController showErrorAlert:fault.message target:self];
+            if ([fault.faultCode isEqualToString:@"404"]) {
+                [alertViewController showErrorAlertWithExit:self];
+            }
+            else {
+                [alertViewController showErrorAlert:fault.message target:self];
+            }            
         }];
     }
 }
