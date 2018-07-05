@@ -3,8 +3,8 @@
 #import "AlertViewController.h"
 #import "Backendless.h"
 
-#define APP_ID @"61AE8EEB-EA13-15FB-FF48-9197C8FD0500"
-#define API_KEY @"77CCF20A-A5AB-FF09-FFFC-710027274900"
+#define APP_ID @"APP_ID"
+#define API_KEY @"API_KEY"
 #define HOST_URL @"http://api.backendless.com"
 
 @interface SignInViewController() {
