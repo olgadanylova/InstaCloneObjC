@@ -2,7 +2,6 @@
 #import "CameraViewController.h"
 #import "AlertViewController.h"
 #import "PictureHelper.h"
-#import "ColorHelper.h"
 #import "Post.h"
 #import "Backendless.h"
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -37,7 +36,7 @@
     self.captionTextView.userInteractionEnabled = YES;
     self.captionTextView.hidden = NO;
     self.clearButton.enabled = YES;
-    [self.clearButton setTintColor:[colorHelper getColorFromHex:@"2C3E50" withAlpha:1]];
+    [self.clearButton setTintColor:[self getColorFromHex:@"2C3E50" withAlpha:1]];
     [self.shareButton setTitle:SHARE forState:UIControlStateNormal];
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage] && picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
@@ -96,6 +95,14 @@
             [alertViewController showErrorAlert:fault.message target:self];
         }];
     }
+}
+
+- (UIColor *)getColorFromHex:(NSString *)hexColor withAlpha:(CGFloat)alpha {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexColor];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:alpha];
 }
 
 - (IBAction)pressedShare:(id)sender {
