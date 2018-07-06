@@ -132,7 +132,6 @@
     CGFloat imageWidth = image.size.width;
     CGFloat imageHeight = image.size.height;
     CGFloat maxSize = 1080;
-    
     if (imageWidth > maxSize && imageHeight > maxSize) {
         if (imageWidth >= imageHeight) {
             CGFloat coef = imageWidth / maxSize;
@@ -145,7 +144,6 @@
             imageWidth = imageWidth / coef;
         }
     }
-    
     CGSize newSize = CGSizeMake(imageWidth, imageHeight);
     UIGraphicsBeginImageContext(newSize);
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
@@ -194,27 +192,27 @@
         case UIImageOrientationRight:
             break;
     }
-    CGContextRef ctx = CGBitmapContextCreate(NULL, image.size.width, image.size.height,
+    CGContextRef context = CGBitmapContextCreate(NULL, image.size.width, image.size.height,
                                              CGImageGetBitsPerComponent(image.CGImage), 0,
                                              CGImageGetColorSpace(image.CGImage),
                                              CGImageGetBitmapInfo(image.CGImage));
-    CGContextConcatCTM(ctx, transform);
+    CGContextConcatCTM(context, transform);
     switch (image.imageOrientation) {
         case UIImageOrientationLeft:
         case UIImageOrientationLeftMirrored:
         case UIImageOrientationRight:
         case UIImageOrientationRightMirrored:
-            CGContextDrawImage(ctx, CGRectMake(0,0,image.size.height,image.size.width), image.CGImage);
+            CGContextDrawImage(context, CGRectMake(0,0,image.size.height,image.size.width), image.CGImage);
             break;
         default:
-            CGContextDrawImage(ctx, CGRectMake(0,0,image.size.width,image.size.height), image.CGImage);
+            CGContextDrawImage(context, CGRectMake(0,0,image.size.width,image.size.height), image.CGImage);
             break;
     }
-    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
-    UIImage *img = [UIImage imageWithCGImage:cgimg];
-    CGContextRelease(ctx);
-    CGImageRelease(cgimg);
-    return img;
+    CGImageRef cgImage = CGBitmapContextCreateImage(context);
+    UIImage *resultImage = [UIImage imageWithCGImage:cgImage];
+    CGContextRelease(context);
+    CGImageRelease(cgImage);
+    return resultImage;
 }
 
 - (void)saveImageToUserDefaults:(UIImage *)image withKey:(NSString *)key {

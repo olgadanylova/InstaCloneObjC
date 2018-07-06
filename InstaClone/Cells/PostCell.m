@@ -21,7 +21,6 @@
     UITapGestureRecognizer *likeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleLikeTap)];
     [self.likeImageView addGestureRecognizer:likeTapGesture];
     self.likeImageView.userInteractionEnabled = YES;
-    
     postStore = [backendless.data of:[Post class]];
     likeStore = [backendless.data of:[Likee class]];
 }

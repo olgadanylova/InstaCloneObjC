@@ -23,25 +23,23 @@
 
 - (void)showErrorAlert:(NSString *)message target:(UIViewController *)target {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:nil];
-    [alert addAction:dismiss];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:nil]];
     [target presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)showErrorAlertWithExit:(UIViewController *)target {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Make sure to configure the app with your APP ID and API KEY before running the app. \nApplication will be closed" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         exit(0);
-    }];
-    [alert addAction:dismiss];
+    }]];
     [target presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)showTakePhotoAlert:(UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate> *)target {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *useCamera = [UIAlertAction actionWithTitle:@"Use camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:@"Use camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            [self showErrorAlert:@"Camera is not available" target:self];
+            [self showErrorAlert:@"Camera is not available" target:target];
         }
         else {
             UIImagePickerController *cameraPicker = [UIImagePickerController new];
@@ -49,24 +47,20 @@
             cameraPicker.delegate = target;
             [target presentViewController:cameraPicker animated:YES completion:nil];
         }
-    }];
-    UIAlertAction *usePhotoLibrary = [UIAlertAction actionWithTitle:@"Use Photo Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        UIImagePickerController *cameraPicker = [UIImagePickerController new];
-        cameraPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        cameraPicker.delegate = target;
-        [target presentViewController:cameraPicker animated:YES completion:nil];
-    }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    [alert addAction:useCamera];
-    [alert addAction:usePhotoLibrary];
-    [alert addAction:cancel];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Use Photo Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIImagePickerController *photoPicker = [UIImagePickerController new];
+        photoPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        photoPicker.delegate = target;
+        [target presentViewController:photoPicker animated:YES completion:nil];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     [target presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)showSegueAlert:(NSString *)title message:(NSString *)message target:(UIViewController *)target action:(void (^)(UIAlertAction *))action {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *OK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:action];
-    [alert addAction:OK];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:action]];
     [target presentViewController:alert animated:YES completion:nil];
 }
 
@@ -78,8 +72,7 @@
     }];
     [alert addAction:[UIAlertAction actionWithTitle:@"Restore" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [target.view endEditing:YES];
-        NSArray *textfields = alert.textFields;
-        UITextField *emailField = textfields[0];
+        UITextField *emailField =  alert.textFields[0];
         [backendless.userService restorePassword:emailField.text response:^{
         } error:^(Fault *fault) {
             [self showErrorAlert:fault.message target:target];

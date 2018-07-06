@@ -15,12 +15,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *likeCountButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *captionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
 
 @property (strong, nonatomic) Post *post;
 @property (strong, nonatomic) PostViewController *postViewController;
 @property (nonatomic) BOOL liked;
 @property (nonatomic) NSInteger likesCount;
-@property (weak, nonatomic) IBOutlet UIButton *editButton;
 
 - (IBAction)pressedEdit:(id)sender;
 
