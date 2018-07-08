@@ -80,14 +80,12 @@
     comments = [self.post.comments sortedArrayUsingDescriptors:@[sortDescriptor]];
     Comment *comment = [comments objectAtIndex:indexPath.row];
     [backendless.userService findById:comment.ownerId response:^(BackendlessUser *user) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
-            cell.nameLabel.text = user.name;
-            cell.commentLabel.text = comment.text;            
-            NSDateFormatter *formatter = [NSDateFormatter new];
-            formatter.dateFormat = @"HH:mm yyyy/MM/dd";
-            cell.dateLabel.text = [formatter stringFromDate:comment.created];
-        });
+        [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
+        cell.nameLabel.text = user.name;
+        cell.commentLabel.text = comment.text;
+        NSDateFormatter *formatter = [NSDateFormatter new];
+        formatter.dateFormat = @"HH:mm yyyy/MM/dd";
+        cell.dateLabel.text = [formatter stringFromDate:comment.created];
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.message target:self];
     }];
@@ -118,9 +116,7 @@
 - (void)reloadTableData {
     [postStore findById:self.post.objectId response:^(Post *post) {
         self.post = post;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
+        [self.tableView reloadData];
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.message target:self];
     }];
@@ -135,12 +131,10 @@
                       parentObjectId:self.post.objectId
                         childObjects:@[comment.objectId]
                             response:^(NSNumber *relationSet) {
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    weakSelf.commentTextField.text = @"";
-                                    [weakSelf.sendButton setEnabled:NO];
-                                    [weakSelf.view endEditing:YES];
-                                    [weakSelf reloadTableData];
-                                });
+                                weakSelf.commentTextField.text = @"";
+                                [weakSelf.sendButton setEnabled:NO];
+                                [weakSelf.view endEditing:YES];
+                                [weakSelf reloadTableData];
                             } error:^(Fault *fault) {
                                 [alertViewController showErrorAlert:fault.message target:weakSelf];
                             }];

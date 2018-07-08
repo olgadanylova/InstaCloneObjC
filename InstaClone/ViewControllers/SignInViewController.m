@@ -67,11 +67,9 @@
         [backendless.userService login:email
                               password:password
                               response:^(BackendlessUser *user) {
-                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                      [self.view endEditing:YES];
-                                      self.emailField.text = @"";
-                                      self.passwordField.text = @"";
-                                  });                                  
+                                  [self.view endEditing:YES];
+                                  self.emailField.text = @"";
+                                  self.passwordField.text = @"";
                                   [self showTabBar];
                               } error:^(Fault *fault) {
                                   [alertViewController showErrorAlert:fault.message target:self];

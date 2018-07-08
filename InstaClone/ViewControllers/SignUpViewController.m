@@ -61,13 +61,6 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)stopActivityIndicator {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.activityIndicator stopAnimating];
-        self.activityIndicator.hidden = YES;
-    });    
-}
-
 - (IBAction)pressedSignUp:(id)sender {
     [self.view endEditing:YES];
     self.activityIndicator.hidden = NO;
@@ -85,16 +78,16 @@
             [backendless.file uploadFile:profileImageFileName content:data response:^(BackendlessFile *profilePicture) {
                 [newUser setProperty:@"profilePicture" object:profilePicture.fileURL];
                 [backendless.userService registerUser:newUser response:^(BackendlessUser *user) {
-                    [self stopActivityIndicator];
+                    [self.activityIndicator stopAnimating];
                     [alertViewController showSegueAlert:@"Registration complete" message:@"Please login to continue" target:self action:^(UIAlertAction *action) {
                         [self performSegueWithIdentifier:@"unwindToSignInVC" sender:nil];
                     }];
                 } error:^(Fault *fault) {
-                    [self stopActivityIndicator];
+                    [self.activityIndicator stopAnimating];
                     [alertViewController showErrorAlert:fault.message target:self];
                 }];
             } error:^(Fault *fault) {
-                [self stopActivityIndicator];
+                [self.activityIndicator stopAnimating];
                 [alertViewController showErrorAlert:fault.message target:self];
             }];
         }
@@ -102,19 +95,19 @@
             NSString *defaultProfilePictureUrl = [NSString stringWithFormat:@"https://api.backendless.com/%@/%@/files/InstaCloneProfilePictures/defaultProfilePicture.png", backendless.appID, backendless.apiKey];
             [newUser setProperty:@"profilePicture" object:defaultProfilePictureUrl];
             [backendless.userService registerUser:newUser response:^(BackendlessUser *user) {
-                [self stopActivityIndicator];
+                [self.activityIndicator stopAnimating];
                 [alertViewController showSegueAlert:@"Registration complete" message:@"Please login to continue" target:self action:^(UIAlertAction *action) {
                     [self performSegueWithIdentifier:@"unwindToSignInVC" sender:nil];
                 }];
             } error:^(Fault *fault) {
-                [self stopActivityIndicator];
+                [self.activityIndicator stopAnimating];
                 [alertViewController showErrorAlert:fault.message target:self];
             }];
         }
     }
     else {
         [alertViewController showErrorAlert:@"Please make sure you've entered your name, email and password correctly" target:self];
-        [self stopActivityIndicator];
+        [self.activityIndicator stopAnimating];
     }
 }
 

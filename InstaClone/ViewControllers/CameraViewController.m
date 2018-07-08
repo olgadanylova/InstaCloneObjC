@@ -78,16 +78,12 @@
         [backendless.file uploadFile:photoFileName content:data response:^(BackendlessFile *photo) {
             Post *newPost = [Post new];
             newPost.photo = photo.fileURL;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                newPost.caption = self.captionTextView.text;
-            });
+            newPost.caption = self.captionTextView.text;
             id<IDataStore>postStore = [backendless.data of:[Post class]];
             [postStore save:newPost response:^(Post *post) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.activityIndicator stopAnimating];
-                    [self setDefaultView];
-                    [self performSegueWithIdentifier:@"unwindToHomeVC" sender:nil];
-                });
+            [self.activityIndicator stopAnimating];
+            [self setDefaultView];
+            [self performSegueWithIdentifier:@"unwindToHomeVC" sender:nil];
             } error:^(Fault *fault) {
                 [alertViewController showErrorAlert:fault.message target:self];
             }];

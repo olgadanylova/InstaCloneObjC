@@ -25,9 +25,7 @@
     currentUser = backendless.userService.currentUser;
     profileImageChanged = NO;
     [pictureHelper setProfilePicture:[currentUser getProperty:@"profilePicture"]  forImageView:self.profileImageView];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.userNameField.text = self->currentUser.name;
-    });
+    self.userNameField.text = self->currentUser.name;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -68,13 +66,6 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)stopActivityIndicator {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.activityIndicator stopAnimating];
-        self.activityIndicator.hidden = YES;
-    });
-}
-
 - (IBAction)pressedCancel:(id)sender {
     
 }
@@ -97,21 +88,19 @@
         [backendless.file remove:profilePicture response:^{
             [pictureHelper removeImageFromUserDefaults:profilePicture];
             NSString *profileImageFileName = [NSString stringWithFormat:@"/InstaCloneProfilePictures/%@.png", [[NSUUID UUID] UUIDString]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIImage *image = [pictureHelper scaleAndRotateImage:self.profileImageView.image];
-                NSData *data = UIImagePNGRepresentation(image);
-                [pictureHelper saveImageToUserDefaults:image withKey:profileImageFileName];
-                [backendless.file uploadFile:profileImageFileName content:data response:^(BackendlessFile *profilePicture) {
-                    [self->currentUser setProperty:@"profilePicture" object:profilePicture.fileURL];
-                    [[backendless.data ofTable:@"Users"] save:self->currentUser response:^(BackendlessUser *updatedUser) {
-                        [alertViewController showUpdateCompleteAlert:self];
-                    } error:^(Fault *fault) {
-                        [alertViewController showErrorAlert:fault.message target:self];
-                    }];
+            UIImage *image = [pictureHelper scaleAndRotateImage:self.profileImageView.image];
+            NSData *data = UIImagePNGRepresentation(image);
+            [pictureHelper saveImageToUserDefaults:image withKey:profileImageFileName];
+            [backendless.file uploadFile:profileImageFileName content:data response:^(BackendlessFile *profilePicture) {
+                [self->currentUser setProperty:@"profilePicture" object:profilePicture.fileURL];
+                [[backendless.data ofTable:@"Users"] save:self->currentUser response:^(BackendlessUser *updatedUser) {
+                    [alertViewController showUpdateCompleteAlert:self];
                 } error:^(Fault *fault) {
                     [alertViewController showErrorAlert:fault.message target:self];
                 }];
-            });
+            } error:^(Fault *fault) {
+                [alertViewController showErrorAlert:fault.message target:self];
+            }];
         } error:^(Fault *fault) {
             [alertViewController showErrorAlert:fault.message target:self];
         }];

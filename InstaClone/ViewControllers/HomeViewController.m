@@ -37,10 +37,8 @@
     [postStore find:^(NSArray *postsFound) {
         NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
         self->posts = [postsFound sortedArrayUsingDescriptors:@[sortDescriptor]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            [self scrollToTop];
-        });
+        [self.tableView reloadData];
+        [self scrollToTop];
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.message target:self];
     }];
@@ -57,9 +55,7 @@
     
     [backendless.userService findById:post.ownerId response:^(BackendlessUser *user) {
         [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            cell.nameLabel.text = user.name;
-        });
+        cell.nameLabel.text = user.name;
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.message target:self];
     }];

@@ -118,9 +118,7 @@
         [confirmAlert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[backendless.data of:[Post class]] remove:post response:^(NSNumber *deleted) {
                 if ([target isKindOfClass:[PostViewController class]]) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [target performSegueWithIdentifier:@"unwindToProfileVC" sender:nil];
-                    });
+                    [target performSegueWithIdentifier:@"unwindToProfileVC" sender:nil];
                 }
             } error:^(Fault *fault) {
                 [self showErrorAlert:fault.message target:target];

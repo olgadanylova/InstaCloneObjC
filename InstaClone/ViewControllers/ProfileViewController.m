@@ -37,12 +37,9 @@
         self->posts = [userPosts sortedArrayUsingDescriptors:@[sortDescriptor]];
         [[backendless.data of:[BackendlessUser class]] getObjectCount:^(NSNumber *usersCount) {
             self->totalUsersCount = [usersCount integerValue];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //[self.collectionView reloadData];
-                [self.collectionView performBatchUpdates:^{
-                    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-                } completion:nil];
-            });
+            [self.collectionView performBatchUpdates:^{
+                [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+            } completion:nil];
         } error:^(Fault *fault) {
             [alertViewController showErrorAlert:fault.message target:self];
         }];

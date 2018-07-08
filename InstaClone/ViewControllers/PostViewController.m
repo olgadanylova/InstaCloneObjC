@@ -58,9 +58,7 @@
         cell.postViewController = self;
         [backendless.userService findById:self.post.ownerId response:^(BackendlessUser *user) {
             [pictureHelper setProfilePicture:[user getProperty:@"profilePicture"] forCell:cell];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                cell.nameLabel.text = user.name;
-            });
+            cell.nameLabel.text = user.name;
         } error:^(Fault *fault) {
             [alertViewController showErrorAlert:fault.message target:self];
         }];
@@ -119,9 +117,7 @@
     if ([segue.identifier isEqualToString:@"ShowLikes"]) {
         LikesViewController *likesVC = (LikesViewController *)[segue destinationViewController];
         likesVC.post = self.post;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [likesVC.tableView reloadData];
-        });
+        [likesVC.tableView reloadData];
     }
     else if ([segue.identifier isEqualToString:@"ShowComments"]) {
         CommentsViewController *commentsVC = [segue destinationViewController];
@@ -150,14 +146,12 @@
     self.post.caption = cell.captionTextView.text;
     [[backendless.data of:[Post class]] save:self.post response:^(Post *editedPost) {
         self.editMode = NO;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            self.navigationItem.title = nil;
-            self.navigationItem.leftBarButtonItem = nil;
-            self.navigationItem.rightBarButtonItem = nil;
-            self.navigationItem.hidesBackButton = NO;
-            [self scrollToTop];
-        });        
+        [self.tableView reloadData];
+        self.navigationItem.title = nil;
+        self.navigationItem.leftBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.hidesBackButton = NO;
+        [self scrollToTop];    
     } error:^(Fault * fault) {
         [alertViewController showErrorAlert:fault.message target:self];
     }];
