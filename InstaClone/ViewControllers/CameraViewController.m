@@ -53,7 +53,7 @@
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
