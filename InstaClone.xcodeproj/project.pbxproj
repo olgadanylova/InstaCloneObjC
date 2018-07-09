@@ -16,7 +16,6 @@
 		5A2F8D862092062B00E51D5C /* LikesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2F8D852092062B00E51D5C /* LikesViewController.m */; };
 		5A2F8D8920920B3E00E51D5C /* LikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2F8D8820920B3E00E51D5C /* LikeCell.m */; };
 		5A3DFDCD208F47150071544C /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3DFDCC208F47150071544C /* CameraViewController.m */; };
-		5A3DFDD1208F63C20071544C /* ColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3DFDD0208F63C20071544C /* ColorHelper.m */; };
 		5AB0915F20E2682900FD6736 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB0915E20E2682900FD6736 /* EditProfileViewController.m */; };
 		5ADC1914208F89D600583E5B /* PictureHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC1913208F89D600583E5B /* PictureHelper.m */; };
 		5E19A14920975FB60083D789 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E19A14820975FB60083D789 /* ProfileViewController.m */; };
@@ -37,6 +36,7 @@
 		5EB7BAEF2089E25B0073FC64 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB7BAEE2089E25B0073FC64 /* SignInViewController.m */; };
 		5EF66A3C208A347A00D33BFD /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF66A3B208A347A00D33BFD /* SignUpViewController.m */; };
 		5EF66A3F208A386500D33BFD /* AlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF66A3E208A386500D33BFD /* AlertViewController.m */; };
+		F2F70D68BE7373C19BBCAB54 /* Pods_InstaClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D3C917C3F92DCFDDD282706 /* Pods_InstaClone.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,8 +57,6 @@
 		5A2F8D8820920B3E00E51D5C /* LikeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LikeCell.m; sourceTree = "<group>"; };
 		5A3DFDCB208F47150071544C /* CameraViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		5A3DFDCC208F47150071544C /* CameraViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
-		5A3DFDCF208F63C20071544C /* ColorHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorHelper.h; sourceTree = "<group>"; };
-		5A3DFDD0208F63C20071544C /* ColorHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorHelper.m; sourceTree = "<group>"; };
 		5AB0915D20E2682900FD6736 /* EditProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
 		5AB0915E20E2682900FD6736 /* EditProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		5ADC1912208F89D600583E5B /* PictureHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PictureHelper.h; sourceTree = "<group>"; };
@@ -152,8 +150,6 @@
 		5A3DFDCE208F63A90071544C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				5A3DFDCF208F63C20071544C /* ColorHelper.h */,
-				5A3DFDD0208F63C20071544C /* ColorHelper.m */,
 				5ADC1912208F89D600583E5B /* PictureHelper.h */,
 				5ADC1913208F89D600583E5B /* PictureHelper.m */,
 			);
@@ -238,6 +234,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F7A63431E769BB6007B6B07 /* Build configuration list for PBXNativeTarget "InstaClone" */;
 			buildPhases = (
+				7B4AECC9EB2D47B6E133799E /* [CP] Check Pods Manifest.lock */,
 				0F7A63281E769BB6007B6B07 /* Sources */,
 				0F7A63291E769BB6007B6B07 /* Frameworks */,
 				0F7A632A1E769BB6007B6B07 /* Resources */,
@@ -317,7 +314,6 @@
 				5EF66A3C208A347A00D33BFD /* SignUpViewController.m in Sources */,
 				5A3DFDCD208F47150071544C /* CameraViewController.m in Sources */,
 				5E69E32C20970D1E0037CEE9 /* CommentsViewController.m in Sources */,
-				5A3DFDD1208F63C20071544C /* ColorHelper.m in Sources */,
 				5E19A14920975FB60083D789 /* ProfileViewController.m in Sources */,
 				5A2F8D862092062B00E51D5C /* LikesViewController.m in Sources */,
 				5ADC1914208F89D600583E5B /* PictureHelper.m in Sources */,

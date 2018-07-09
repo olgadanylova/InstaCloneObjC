@@ -30,7 +30,7 @@
     [self loadPosts];
     [self scrollToTop];
     self.tabBarController.delegate = self;
-    self.navigationController.tabBarController.tabBar.hidden = NO;
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)loadPosts {
@@ -42,6 +42,19 @@
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.message target:self];
     }];
+}
+
+- (void)scrollToTop {
+    NSIndexPath *top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
+    [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+- (void)commentsButtonTapped:(UIButton *)sender {
+    [self performSegueWithIdentifier:@"ShowComments" sender:sender];
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    [self scrollToTop];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -70,10 +83,9 @@
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"HH:mm yyyy/MM/dd";
     cell.dateLabel.text = [formatter stringFromDate:post.created];
-    
-    NSArray *likes = post.likes;
+
     NSString *predicateString = [NSString stringWithFormat:@"ownerId = '%@'", backendless.userService.currentUser.objectId];
-    if ([likes filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:predicateString]].firstObject) {
+    if ([post.likes filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:predicateString]].firstObject) {
         cell.liked = YES;
         cell.likeImageView.image = [UIImage imageNamed:@"likeSelected.png"];
     }
@@ -81,21 +93,12 @@
         cell.liked = NO;
         cell.likeImageView.image = [UIImage imageNamed:@"like.png"];
     }
-    
     cell.captionLabel.text = post.caption;
     return cell;
 }
 
 - (void)likesButtonTapped:(UIButton *)sender {
     [self performSegueWithIdentifier:@"ShowLikes" sender:sender];
-}
-
-- (void)commentsButtonTapped:(UIButton *)sender {
-    [self performSegueWithIdentifier:@"ShowComments" sender:sender];
-}
-
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    [self scrollToTop];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -106,18 +109,12 @@
         LikesViewController *likesVC = (LikesViewController *)[segue destinationViewController];
         likesVC.post = post;
         [likesVC.tableView reloadData];
-        
     }
     else if ([segue.identifier isEqualToString:@"ShowComments"]) {
         CommentsViewController *commentsVC = [segue destinationViewController];
         commentsVC.post = post;
         [commentsVC.tableView reloadData];
     }
-}
-
-- (void)scrollToTop {
-    NSIndexPath *top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
-    [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 - (IBAction)pressedLogout:(id)sender {

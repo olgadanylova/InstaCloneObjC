@@ -17,7 +17,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.activityIndicator.hidden = YES;    
+    self.activityIndicator.hidden = YES;
     UITapGestureRecognizer *likeTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleLikeTap)];
     [self.likeImageView addGestureRecognizer:likeTapGesture];
     self.likeImageView.userInteractionEnabled = YES;
@@ -33,17 +33,17 @@
         self.likeImageView.image = [UIImage imageNamed:@"likeSelected"];
         [likeStore save:[Likee new] response:^(Likee *like) {
             [self->postStore addRelation:@"likes:Like:n"
-                                             parentObjectId:self.post.objectId
-                                               childObjects:@[like.objectId]
-                                                   response:^(NSNumber *relationSet) {
-                                                       [weakPostStore findById:weakSelf.post.objectId response:^(Post *post) {
-                                                           [UIView setAnimationsEnabled:NO];
-                                                           [weakSelf.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", [post.likes count]] forState:UIControlStateNormal];
-                                                           [UIView setAnimationsEnabled:YES];
-                                                       } error:^(Fault *fault) {
-                                                       }];
-                                                   } error:^(Fault *fault) {
-                                                   }];
+                          parentObjectId:self.post.objectId
+                            childObjects:@[like.objectId]
+                                response:^(NSNumber *relationSet) {
+                                    [weakPostStore findById:weakSelf.post.objectId response:^(Post *post) {
+                                        [UIView setAnimationsEnabled:NO];
+                                        [weakSelf.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", (unsigned long)[post.likes count]] forState:UIControlStateNormal];
+                                        [UIView setAnimationsEnabled:YES];
+                                    } error:^(Fault *fault) {
+                                    }];
+                                } error:^(Fault *fault) {
+                                }];
         } error:^(Fault *fault) {
         }];
     }
@@ -56,10 +56,10 @@
             [self->likeStore remove:like response:^(NSNumber *removed) {
                 [self->postStore findById:self.post.objectId response:^(Post *post) {
                     [UIView setAnimationsEnabled:NO];
-                    [self.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", [post.likes count]] forState:UIControlStateNormal];                
+                    [self.likeCountButton setTitle:[NSString stringWithFormat:@"%lu Likes", (unsigned long)[post.likes count]] forState:UIControlStateNormal];
                     [UIView setAnimationsEnabled:YES];
                 } error:^(Fault *fault) {
-                }];    
+                }];
             } error:^(Fault *fault) {
             }];
         } error:^(Fault *fault) {

@@ -58,8 +58,8 @@
     [target presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)showSegueAlert:(NSString *)title message:(NSString *)message target:(UIViewController *)target action:(void (^)(UIAlertAction *))action {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+- (void)showSegueAlert:(UIViewController *)target action:(void (^)(UIAlertAction *))action {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Registration complete" message:@"Please login to continue" preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:action]];
     [target presentViewController:alert animated:YES completion:nil];
 }

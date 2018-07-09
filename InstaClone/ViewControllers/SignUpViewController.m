@@ -18,9 +18,8 @@
     CGFloat side = self.profileImageView.frame.size.width / 2;
     self.profileImageView.frame = CGRectMake(0, 0, side, side);
     self.profileImageView.layer.cornerRadius = side;
-    self.profileImageView.clipsToBounds = YES;
-    self.activityIndicator.hidden = YES;
     [self.profileImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageView)]];
+    self.activityIndicator.hidden = YES;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -79,7 +78,7 @@
                 [newUser setProperty:@"profilePicture" object:profilePicture.fileURL];
                 [backendless.userService registerUser:newUser response:^(BackendlessUser *user) {
                     [self.activityIndicator stopAnimating];
-                    [alertViewController showSegueAlert:@"Registration complete" message:@"Please login to continue" target:self action:^(UIAlertAction *action) {
+                    [alertViewController showSegueAlert:self action:^(UIAlertAction *action) {
                         [self performSegueWithIdentifier:@"unwindToSignInVC" sender:nil];
                     }];
                 } error:^(Fault *fault) {
@@ -96,7 +95,7 @@
             [newUser setProperty:@"profilePicture" object:defaultProfilePictureUrl];
             [backendless.userService registerUser:newUser response:^(BackendlessUser *user) {
                 [self.activityIndicator stopAnimating];
-                [alertViewController showSegueAlert:@"Registration complete" message:@"Please login to continue" target:self action:^(UIAlertAction *action) {
+                [alertViewController showSegueAlert:self action:^(UIAlertAction *action) {
                     [self performSegueWithIdentifier:@"unwindToSignInVC" sender:nil];
                 }];
             } error:^(Fault *fault) {
@@ -106,8 +105,8 @@
         }
     }
     else {
-        [alertViewController showErrorAlert:@"Please make sure you've entered your name, email and password correctly" target:self];
         [self.activityIndicator stopAnimating];
+        [alertViewController showErrorAlert:@"Please make sure you've entered your name, email and password correctly" target:self];        
     }
 }
 

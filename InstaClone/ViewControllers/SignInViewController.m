@@ -19,7 +19,7 @@
     self.emailField.delegate = self;
     self.passwordField.delegate = self;
     self.emailField.tag = 0;
-    self.passwordField.tag = 1;    
+    self.passwordField.tag = 1;
     backendless.hostURL = HOST_URL;
     [backendless initApp:APP_ID APIKey:API_KEY];
     if (backendless.userService.isValidUserToken && backendless.userService.currentUser) {
@@ -27,14 +27,13 @@
     }
     else {
         [backendless.userService logout:^{
-            
         } error:^(Fault *fault) {
             if ([fault.faultCode isEqualToString:@"404"]) {
                 [alertViewController showErrorAlertWithExit:self];
             }
             else {
                 [alertViewController showErrorAlert:fault.message target:self];
-            }            
+            }
         }];
     }
 }
@@ -64,16 +63,14 @@
         [backendless.userService setStayLoggedIn:YES];
         NSString *email = self.emailField.text;
         NSString *password = self.passwordField.text;
-        [backendless.userService login:email
-                              password:password
-                              response:^(BackendlessUser *user) {
-                                  [self.view endEditing:YES];
-                                  self.emailField.text = @"";
-                                  self.passwordField.text = @"";
-                                  [self showTabBar];
-                              } error:^(Fault *fault) {
-                                  [alertViewController showErrorAlert:fault.message target:self];
-                              }];        
+        [backendless.userService login:email password:password response:^(BackendlessUser *user) {
+            [self.view endEditing:YES];
+            self.emailField.text = @"";
+            self.passwordField.text = @"";
+            [self showTabBar];
+        } error:^(Fault *fault) {
+            [alertViewController showErrorAlert:fault.message target:self];
+        }];
     }
     else {
         [alertViewController showErrorAlert:@"Please make sure you've entered your email and password correctly" target:self];
