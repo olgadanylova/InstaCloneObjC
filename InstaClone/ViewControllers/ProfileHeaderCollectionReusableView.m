@@ -20,7 +20,4 @@
     [pictureHelper setProfilePicture:[_user getProperty:@"profilePicture"] forHeader:self];
 }
 
-- (IBAction)pressedEditProfile:(id)sender {
-}
-
 @end

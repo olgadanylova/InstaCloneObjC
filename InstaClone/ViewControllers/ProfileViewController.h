@@ -5,7 +5,7 @@
 
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 
--(void)getUserPosts;
+- (void)getUserPosts;
 
 - (IBAction)pressedRefresh:(id)sender;
 

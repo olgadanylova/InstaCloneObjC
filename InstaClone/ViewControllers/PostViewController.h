@@ -4,8 +4,8 @@
 
 @interface PostViewController : UITableViewController<UITextViewDelegate>
 
-@property (nonatomic) BOOL editMode;
 @property (strong, nonatomic) Post *post;
+@property (nonatomic) BOOL editMode;
 
 - (IBAction)pressedSave:(id)sender;
 - (IBAction)pressedCancel:(id)sender;

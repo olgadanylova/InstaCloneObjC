@@ -12,6 +12,4 @@
 
 @property (strong, nonatomic) BackendlessUser *user;
 
-- (IBAction)pressedEditProfile:(id)sender;
-
 @end

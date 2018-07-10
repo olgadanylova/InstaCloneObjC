@@ -48,7 +48,7 @@
 - (void)keyboardWillBeHidden:(NSNotification *)notification {
     [UIView animateWithDuration:0.3 animations:^{
         CGRect f = self.view.frame;
-        f.origin.y = 0.0f;
+        f.origin.y = 0;
         self.view.frame = f;
     }];
 }
@@ -127,17 +127,14 @@
     Comment *newComment = [Comment new];
     newComment.text = self.commentTextField.text;
     [commentStore save:newComment response:^(Comment *comment) {
-        [self->postStore addRelation:@"comments:Comment:n"
-                      parentObjectId:self.post.objectId
-                        childObjects:@[comment.objectId]
-                            response:^(NSNumber *relationSet) {
-                                weakSelf.commentTextField.text = @"";
-                                [weakSelf.sendButton setEnabled:NO];
-                                [weakSelf.view endEditing:YES];
-                                [weakSelf reloadTableData];
-                            } error:^(Fault *fault) {
-                                [alertViewController showErrorAlert:fault.message target:weakSelf];
-                            }];
+        [self->postStore addRelation:@"comments:Comment:n" parentObjectId:self.post.objectId childObjects:@[comment.objectId] response:^(NSNumber *relationSet) {
+            weakSelf.commentTextField.text = @"";
+            [weakSelf.sendButton setEnabled:NO];
+            [weakSelf.view endEditing:YES];
+            [weakSelf reloadTableData];
+        } error:^(Fault *fault) {
+            [alertViewController showErrorAlert:fault.message target:weakSelf];
+        }];
     } error:^(Fault *fault) {
         [alertViewController showErrorAlert:fault.message target:self];
     }];

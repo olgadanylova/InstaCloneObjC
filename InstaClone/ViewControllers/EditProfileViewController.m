@@ -28,7 +28,7 @@
     self.userNameField.text = self->currentUser.name;
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationItem setHidesBackButton:YES];
 }
