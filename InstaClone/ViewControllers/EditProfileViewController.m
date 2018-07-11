@@ -19,7 +19,6 @@
     CGFloat side = self.profileImageView.frame.size.width / 2;
     self.profileImageView.frame = CGRectMake(0, 0, side, side);
     self.profileImageView.layer.cornerRadius = side;
-    self.profileImageView.clipsToBounds = YES;
     self.activityIndicator.hidden = YES;
     [self.profileImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageView)]];
     currentUser = backendless.userService.currentUser;

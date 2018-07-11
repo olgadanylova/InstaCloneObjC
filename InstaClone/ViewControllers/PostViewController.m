@@ -142,7 +142,7 @@
 }
 
 - (IBAction)pressedSave:(id)sender {
-    PostCaptionCell *cell = (PostCaptionCell *)[(UITableView *)self.view cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+    PostCaptionCell *cell = (PostCaptionCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
     self.post.caption = cell.captionTextView.text;
     [[backendless.data of:[Post class]] save:self.post response:^(Post *editedPost) {
         self.editMode = NO;
