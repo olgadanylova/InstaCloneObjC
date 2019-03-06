@@ -84,7 +84,7 @@
         NSString *profilePicture = [currentUser getProperty:@"profilePicture"];
         NSRange range = [profilePicture rangeOfString:@"InstaCloneProfilePictures"];
         profilePicture = [profilePicture substringFromIndex:range.location];
-        [backendless.file remove:profilePicture response:^{
+        [backendless.file remove:profilePicture response:^(NSNumber *removed) {
             [pictureHelper removeImageFromUserDefaults:profilePicture];
             NSString *profileImageFileName = [NSString stringWithFormat:@"/InstaCloneProfilePictures/%@.png", [[NSUUID UUID] UUIDString]];
             UIImage *image = [pictureHelper scaleAndRotateImage:self.profileImageView.image];
